@@ -1,0 +1,10 @@
+Package: aRps
+Type: Package
+Title: Analyzing and visualizing Arps model data
+Version: 0.1
+Date: 2013-11-24
+Author: Chris Reudenbach, Hanna Meyer
+Maintainer: Hanna Meyer <hanna.meyer1@gmail.com>
+Description: R functions to analyze and visualite ARPS results
+License: GNU lGPL (>=3)
+Depends: ncdf
