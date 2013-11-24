@@ -1,4 +1,4 @@
 aRps
 ====
 
-Analyzing and visualizing Arps models
+Analyzing and visualizing ARPS model runs output
