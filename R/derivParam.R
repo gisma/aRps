@@ -11,7 +11,9 @@ derivParam<-function(x,param=c("t","es","e","rh")){
     if (any(param=="e")||any(param=="rh")){
       qv = get.var.ncdf( x, "QV")
       e = (p * qv) / 622 # water partial pressure (e)
-      rh=(e/es)*1000 #relative air humidity
+      if (any(param=="rh")){
+        rh=(e/es)*1000 #relative air humidity
+      }
     }
     
   result=list()
