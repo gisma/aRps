@@ -1,4 +1,5 @@
 derivParam<-function(x,param=c("t","es","e","rh")){
+    require(ncdf)
     p = get.var.ncdf( x, "P")
     pt = get.var.ncdf( x, "PT")  
    
