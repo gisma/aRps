@@ -42,5 +42,5 @@ with pt is the potential temperature,p is the pressure and qv is the water vapor
 \examples{
   #### Example to extract the proj4 information from a nc file
   #  arpsexample=system.file("stol_d1_ARP.nc", package="aRps")
-  #  proj=extractProj(arpsexample)
+  #  derivParam(arpsexample)
 }
