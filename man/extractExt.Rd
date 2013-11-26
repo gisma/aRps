@@ -31,8 +31,8 @@
   To identify the reference system see \code{\link{extractProj}}. Use alwas first extractProj and then extractExt!!
 }
 \examples{
-  #### Example to extract the proj4 information from a nc file
-#  arpsexample=system.file("stol_d1_ARP.nc", package="aRps")
-#  proj=extractProj(arpsexample)
-#  ext=extractExt(arpsexample,proj)
+  #### Example to determine the extent coordinates from a nc file
+  arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
+  proj=extractProj(arpsexample)
+  ext=extractExt(arpsexample,proj)
 }

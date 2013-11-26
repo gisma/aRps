@@ -29,6 +29,6 @@
 }
 \examples{
   #### Example to extract the proj4 information from a nc file
-#  arpsexample=system.file("stol_d1_ARP.nc", package="aRps")
-#  proj=extractProj(arpsexample)
+  arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
+  proj=extractProj(arpsexample)
 }

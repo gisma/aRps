@@ -40,9 +40,9 @@ with pt is the potential temperature,p is the pressure and qv is the water vapor
   For adaption of the extent according to the identified reference system see \code{\link{extractExt}}. Use alwas first extractProj and then extractExt!!
 }
 \examples{
-  #### Example to extract the proj4 information from a nc file
-  #  arpsexample==open.ncdf(system.file("stol_d1_ARP.nc", package="aRps"))
-  #  cparam=derivParam(arpsexample)
-  #  str(cparam) #see which parameters are listed
-  #  cparam$t #to extract temperature from the list
+  #### Example to calculate derivated parameters from a nc file
+    arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
+    cparam=derivParam(arpsexample)
+    str(cparam) #see which parameters are listed
+    cparam$t #to extract temperature from the list
 }
