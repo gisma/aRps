@@ -48,10 +48,9 @@ derivParam<-function(nc,param=c("t","es","e","rh","td","p","rn")){
     a2 = 0.0081328 * 10 ^ (3.49149 - 1302.8844 / tk)
     es = (10 ^ (a0 - a1 + a2 - 2949.076 / tk))
     
-  # alternative calculation slightly less accurate but faster
-  # es= 6.107 * 10 ^ (7.5 * tc / (235 + tc))
-  
-  # alternative calculation slightly less accurate but faster    
+  # alternative calculation 
+  # more accurate 
+  # but the single params for water and ice must be set
   #  T > 0 above water
   # a =  7.5
   # b = 237.3
@@ -63,7 +62,6 @@ derivParam<-function(nc,param=c("t","es","e","rh","td","p","rn")){
   # b = 265.5 
   # Saturation vapor pressure alternative calculatio (hPa)
   # es = 6.1078 * 10^((a*tc)/(b+tc))
-  
   }
   
   if (any(param=="e")){
@@ -79,7 +77,8 @@ derivParam<-function(nc,param=c("t","es","e","rh","td","p","rn")){
 
   if (any(param=="td")){
   #  Dew-point temprature (Td in C)  from vapor pressure (e) 
-  # T> 0 above water is calculated in two steps 
+  # T> 0 above water
+  # the param setting for ice and dewpoint is still to do
   a =  7.5
   b = 237.3
   #für T < 0 über Wasser (Taupunkt)
