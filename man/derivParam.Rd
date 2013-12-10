@@ -9,15 +9,55 @@
 }
 \details{
 \itemize{
-  \item air temperature \eqn{t =(\frac{pt}{(1000/p)})^0.287}
-  \item water saturation pressure \eqn{es = 6.107 * (10^(\frac{(7.5 * t)}{(235 + t)}))}
-  \item water partial pressure \eqn{e = \frac{(p * qv)}{622}}
-  \item relative air humidity \eqn{rh=(\frac{e}{es})*1000}
+  \item exner pressure (Pa):  \eqn{e_p = (p / 100000) ^ (287.058 / 1005)}
+  \itemize{ 
+  \item \eqn{p = pressure (Pa)}
+  \item \eqn{cp = 1005 = specific heat capacity (J/kg K)}
+  \item \eqn{R =  287.058 0 specific gas constant (J/kg K)}
+   }
+  \item air temperature (C): \eqn{tc = e_p * pt -273.15}
+  \itemize{ 
+  \item \eqn{pt = potential temperature (K)}
+  \item \eqn{e_p = exner pressure (Pa)}
+  }
+  \item air temperature (K):  \eqn{tk = e_p * pt} 
+  \itemize{ 
+  \item \eqn{pt = potential temperature (K)}
+  \item \eqn{e_p = exner pressure (Pa)}
+  }
+  
+ \item water vapor saturation pressure (hPa):   \eqn{es = (10 ^ (a0 - a1 + a2 - 2949.076 / tk))}
+  \itemize{ 
+  \item \eqn{a0 = 23.832241 - 5.02808 * log10(tk)}
+  \item \eqn{a1 = 0.00000013816 * 10 ^ (11.344 - 0.0303998 * tk)}
+  \item \eqn{a2 = 0.0081328 * 10 ^ (3.49149 - 1302.8844 / tk)}  }
+     
+  \item water vapor pressure (hPa):  \eqn{e = (p/0.622 * qv)/100} 
+  \itemize{ 
+  \item \eqn{p = pressure (Pa)}
+  \item \eqn{qv = Water Vapor Mixing Ratio (g/kg)}
+   }
+
+  \item dew point temperature (c) \eqn{td = b*v/(a-v)}
+  \itemize{ 
+  \item \eqn{v = log10(e/6.1078)}
+   \itemize{ 
+  \item \eqn{e = water vapor pressure (hPa)}
+  }
+  \item \eqn{a =   7.5 (if tc > 0)}
+  \item \eqn{b = 237.3 (if tc > 0)}
+  }  
+ 
+  \item relative air humidity (percent): \eqn{ rh=(e/es)*100}
+  \itemize{ 
+  \item \eqn{e = water vapor pressure (hPa)}
+  \item \eqn{es = water vapor saturation pressure (hPa)}
+  }
 }
-with pt is the potential temperature,p is the pressure and qv is the water vapor specific humidity from the inptfile
+with pt is the potential temperature (K), p is the pressure (Pa),  qv is the water vapor mixing ratio (g/kg), rn is the rain (mm) as derived from the model inputfile.
 }
 \usage{
-  derivParam(x,param=c("t","es","e","rh"))
+  derivParam(x,param=c("tc","tk", "es","e","rh","td","p","rn"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -30,14 +70,14 @@ with pt is the potential temperature,p is the pressure and qv is the water vapor
 }
 
 \value{
-  A list of containing the calculated paameters as arrays
+  A list containing the calculated parameters as arrays
 }
 
 \author{
-  Chris Reudenbach and Hanna Meyer
+  Hanna Meyer and Chris Reudenbach
 }
 \seealso{
-  For adaption of the extent according to the identified reference system see \code{\link{extractExt}}. Use alwas first extractProj and then extractExt!!
+  For adaption of the projection and domain extent according to the identified reference system see \code{\link{extractExt}}. It is strongly recommended to use always first extractProj and then extractExt!!
 }
 \examples{
   #### Example to calculate derivated parameters from a nc file

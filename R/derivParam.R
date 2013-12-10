@@ -1,4 +1,4 @@
-derivParam<-function(nc,param=c("t","es","e","rh","td","p","rn")){
+derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn")){
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
   #
@@ -33,6 +33,7 @@ derivParam<-function(nc,param=c("t","es","e","rh","td","p","rn")){
     
   # calculate dry bulb temperature from potential temperature using exner function
   # first calculate Exner pressure (e_p)
+  
   e_p = (p / 100000) ^ (287.058 / 1005)
   # calculate dry bulb temperature using exner pressure
   # Air Temp in ° C
@@ -42,7 +43,7 @@ derivParam<-function(nc,param=c("t","es","e","rh","td","p","rn")){
 
   # Computes the saturation vapour pressure over water at temperature t (K).
   # es in hPas, t in K
-  if (any(param=="es")||any(param=="rh")){
+  if (any(param=="es")){
     a0 = 23.832241 - 5.02808 * log10(tk)
     a1 = 0.00000013816 * 10 ^ (11.344 - 0.0303998 * tk)
     a2 = 0.0081328 * 10 ^ (3.49149 - 1302.8844 / tk)
