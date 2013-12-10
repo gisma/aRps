@@ -83,6 +83,6 @@ with pt is the potential temperature (K), p is the pressure (Pa),  qv is the wat
   #### Example to calculate derivated parameters from a nc file
     arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
     cparam=derivParam(arpsexample)
-    str(cparam) #see which parameters are listed
-    cparam$t #to extract temperature from the list
+    str(cparam) # see which parameters are listed
+    cparam$tc # to extract air dry bulb temperature (C) from the list
 }
