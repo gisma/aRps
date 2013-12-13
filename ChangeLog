@@ -1,0 +1,6 @@
+10 Nov 2007 ... removed \usage{} notes that were throwing warnings for R CMD check.
+                Functionally identical to previous version.
+
+16 Nov 2004 ... removed the data directory and sample.sonde.Rdata 
+                It wasn't being used and was creating problems on the Windows
+                installs because it couldn't be zipped. 

@@ -57,11 +57,11 @@
 with pt is the potential temperature (K), p is the pressure (Pa),  qv is the water vapor mixing ratio (g/kg), rn is the rain (mm) as derived from the model inputfile.
 }
 \usage{
-  derivParam(x,param=c("tc","tk", "es","e","rh","td","p","rn"))
+  derivParam(nc,param=c("tc","tk", "es","e","rh","td","p","rn"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
+  \item{nc}{
     A netcdf object
   }
   \item{param}{

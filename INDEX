@@ -1,0 +1,11 @@
+ExampleSonde            Example of radiosonde observations
+PWV                     Precipitable Water Vapor
+getsonde                read a radiosonde file to an R dataframe.
+plotsonde               Creates a SKEW-T, log p diagram for a
+                        radiosonde dataframe.
+plotwind                Winds Profile Plot
+skewt.axis              Draws a SKEW-T, log p axis.
+skewt.lines             Overlays data on a SKEW-T, log p axis
+skewt.points            Overlays data on a SKEW-T, log p axis
+station.symbol          Adds a meteorological surface station
+                        annotation to a plot.
