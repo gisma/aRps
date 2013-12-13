@@ -28,8 +28,13 @@ derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep")){
   pt = get.var.ncdf( nc, "PT")
   # get Water Vapor Mixing Ratio (g/kg) 
   qv <- get.var.ncdf( nc, "QV")
-  # get rain in mm
-    
+  # get u wind vector (m/s)
+  u <- get.var.ncdf( nc, "U")    
+  # get V wind vector (m/s)
+  v <- get.var.ncdf( nc, "v")    
+  # get V wind vector (m/s)
+  w <- get.var.ncdf( nc, "w")    
+  
   # calculate dry bulb temperature from potential temperature using exner function
   # first calculate Exner pressure (e_p)
   
