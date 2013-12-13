@@ -1,4 +1,4 @@
-derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn", "ep")){
+derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep")){
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
   #
@@ -19,22 +19,21 @@ derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn", "ep")){
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   #  
   
-  filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
-  nc <- open.ncdf( filename )
+  #filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
+  #nc <- open.ncdf( filename )
   # get pressure (Pa)
   #p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1) )
-  p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1))
+  p = get.var.ncdf( nc, "P")
   # get potentialk Temperatur in K
-  pt = get.var.ncdf( nc, "PT", start=c(1,1,2,1), count=c(5,5,1,1) )
+  pt = get.var.ncdf( nc, "PT")
   # get Water Vapor Mixing Ratio (g/kg) 
-  qv <- get.var.ncdf( nc, "QV", start=c(1,1,2,1), count=c(5,5,1,1) )
+  qv <- get.var.ncdf( nc, "QV")
   # get rain in mm
-  rn = get.var.ncdf( nc, "RAING", start=c(1,1,2,1), count=c(5,5,1,1) )
     
   # calculate dry bulb temperature from potential temperature using exner function
   # first calculate Exner pressure (e_p)
   
-  ep = (p / 100000) ^ (287.058 / 1005)
+  ep = (p / 100000.0) ^ (287.058 / 1005.0)
   # calculate dry bulb temperature using exner pressure
   # Air Temp in ° C
   tc = ep * pt -273.15
@@ -60,8 +59,7 @@ derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn", "ep")){
   b <- replace(b, tc <0,  285.5)
   # Saturation vapor pressure alternative calculatio (hPa)
   es = 6.1078 * 10^((a*tc)/(b+tc))
-  # Saturation vapor pressure alternative calculatio (hPa)
-  esd = 6.1078 * 10^((ad*tc)/(bd+tc))
+  
   }
   
   if (any(param=="e")){
@@ -78,11 +76,11 @@ derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn", "ep")){
   if (any(param=="td")){
   #  Dew-point temprature (Td in C)  from vapor pressure (e) 
   # T> 0 above water
-    a <- replace(td, td >= 0, 7.6)
-    b <- replace(td, td >= 0,  240.7)
+    a <- replace(tc, tc >= 0, 7.6)
+    b <- replace(tc, tc >= 0,  240.7)
     # T < 0 above ice Eis (freezing point)
-    a <- replace(a, td <=0, 9.5)
-    b <- replace(b, td <=0,  285.5)
+    a <- replace(a, tc <0, 9.5)
+    b <- replace(b, tc <0,  285.5)
   v = log10(e/6.1078)
   # Dewpoint Temperature C
   td = b*v/(a-v)  
@@ -95,6 +93,11 @@ derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn", "ep")){
       # calculate relative air humidity
         rh=(e/es)*100 
       }
+  if (any(param=="pr")){
+    # convert pressure from Pa to hPa
+    pr=p/100.0
+  }
+  
   
   result=list()
   for (i in 1:length(param)){

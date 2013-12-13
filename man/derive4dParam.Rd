@@ -1,11 +1,11 @@
-\name{derivParam}
-\alias{derivParam}
+\name{derive4dParam}
+\alias{derive4dParam}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Calculate climatic parameters derivated from the arps output
+  Calculate meteorological parameters as derived from the arps output
 }
 \description{
-  Calculate air temperature (t) ,water saturation pressure (es), water partial pressure (e), relative air humidity (rh) from arps output
+  Calculates exner pressure (Pa,) air temperature in degree Celsius (C) , Calculate air temperature (K), potential temperature (K), dew point temperature (C),relative air humidity (percent), water vapor saturation pressure (hPa), water vapor pressure (hPa) and pressure (Pa) from arps output
 }
 \details{
 \itemize{
@@ -27,10 +27,17 @@
   }
   
  \item water vapor saturation pressure (hPa):   \eqn{es = (10 ^ (a0 - a1 + a2 - 2949.076 / tk))}
-  \itemize{ 
-  \item \eqn{a0 = 23.832241 - 5.02808 * log10(tk)}
-  \item \eqn{a1 = 0.00000013816 * 10 ^ (11.344 - 0.0303998 * tk)}
-  \item \eqn{a2 = 0.0081328 * 10 ^ (3.49149 - 1302.8844 / tk)}  }
+   \itemize{ 
+  \item \eqn{v = log10(e/6.1078)}
+   \itemize{ 
+  \item \eqn{e = water vapor pressure (hPa)}
+  }
+  \item \eqn{a =   7.5 (if tc >= 0)}
+  \item \eqn{b = 237.3 (if tc >= 0)}
+  }  
+  \item \eqn{a =   9.5 (if tc < 0)}
+  \item \eqn{b = 285.5 (if tc < 0)}
+
      
   \item water vapor pressure (hPa):  \eqn{e = (p/0.622 * qv)/100} 
   \itemize{ 
@@ -38,15 +45,17 @@
   \item \eqn{qv = Water Vapor Mixing Ratio (g/kg)}
    }
 
-  \item dew point temperature (c) \eqn{td = b*v/(a-v)}
+  \item dew point temperature (C) \eqn{td = b*v/(a-v)}
   \itemize{ 
   \item \eqn{v = log10(e/6.1078)}
    \itemize{ 
   \item \eqn{e = water vapor pressure (hPa)}
   }
-  \item \eqn{a =   7.5 (if tc > 0)}
-  \item \eqn{b = 237.3 (if tc > 0)}
+  \item \eqn{a =   7.6 (if tc >= 0)}
+  \item \eqn{b = 240.7 (if tc >= 0)}
   }  
+  \item \eqn{a =   9.5 (if tc < 0)}
+  \item \eqn{b = 285.5 (if tc < 0)}
  
   \item relative air humidity (percent): \eqn{ rh=(e/es)*100}
   \itemize{ 
@@ -57,7 +66,7 @@
 with pt is the potential temperature (K), p is the pressure (Pa),  qv is the water vapor mixing ratio (g/kg), rn is the rain (mm) as derived from the model inputfile.
 }
 \usage{
-  derivParam(nc,param=c("tc","tk", "es","e","rh","td","p","rn","ep"))
+  derive4dParam(nc,param=c("tc","td","tk", "es","e","rh","pr","ep"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -82,7 +91,7 @@ with pt is the potential temperature (K), p is the pressure (Pa),  qv is the wat
 \examples{
   #### Example to calculate derivated parameters from a nc file
     arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
-    cparam=derivParam(arpsexample)
+    cparam=derive4dParam(arpsexample)
     str(cparam) # see which parameters are listed
     cparam$tc # to extract air dry bulb temperature (C) from the list
 }
