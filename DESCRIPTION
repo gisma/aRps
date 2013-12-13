@@ -5,7 +5,6 @@ Version: 0.1
 Date: 2013-11-24
 Author: Chris Reudenbach, Hanna Meyer
 Maintainer: Hanna Meyer <hanna.meyer1@gmail.com>
-Description: 
 Description: aRpsonde is a collection of programs for reading and
         plotting SKEW-T,log p diagrams and wind profiles for data
         collected by radiosondes (the typical weather balloon-borne
@@ -14,9 +13,13 @@ Description: aRpsonde is a collection of programs for reading and
         data files are in a common format that has a header followed by
         specific variables.  Use "help(ExampleSonde)" for the full
         explanation of the data files.
-        It ist a clone of the package Radisonde to analyze and visualite 
-        ARPS model run results with degree Celsius on the temperature axis
-        as well as the possiblity to zoom in th eboundary layer pressure levels
+        The visualisation of sounding data is cloned by the package Radisonde 
+        originally from Tim Hoar, Eric Gilleland,  Doug Nychka and Liangying Zhang
+        <thoar@ucar.edu> This was adapted to provide degree Celsius scaling 
+        and the possibility to focus on the lower boundary pressure levels
+        with respect to ARPS model run results
+        The visualisation of the meteogram plots utilize Code from the package 
+        meteogRam as provided by Bogdan Bochenek <bogdan.bochenek@uj.edu.pl>        
 License: GPL (>= 2)
 Depends: R (>= 2.14), stats, methods, ncdf, ggplot2
 
