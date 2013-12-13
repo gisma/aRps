@@ -1,27 +1,31 @@
 Package: aRps
 Type: Package
-Title: Analyzing and visualizing Arps model runs output 
+Title: Analyzing and visualizing Arps model runs output
 Version: 0.1
 Date: 2013-11-24
 Author: Chris Reudenbach, Hanna Meyer
 Maintainer: Hanna Meyer <hanna.meyer1@gmail.com>
 Description: aRps is a collection of routines for georeference, read and
-        plot ARPS model run results.
-        Currently the following plots are supported:
-        meteograms with n parametes, different SKEW-T,log p diagrams (C) 
-        wind profiles for vertical and temporal meteorological data as derived by 
-        rawinsondes or in this case numerical weather prediction models as ARPS 
-        The raw ARPS raw data files are in netCSF format. This is extracted and 
-        transformed  format to a matrix with a header followed by
-        specific variables.  Use "help(ExampleSonde)" for the full
-        explanation of the sounding data files.
-        The visualisation of sounding data is cloned by the package Radisonde 
-        originally from Tim Hoar, Eric Gilleland,  Doug Nychka and Liangying Zhang
-        <thoar@ucar.edu> This was adapted to provide degree Celsius scaling 
-        and the possibility to focus on the lower boundary pressure levels
-        with respect to ARPS model run results
-        The visualisation of the meteogram plots utilize Code from the package 
-        meteogRam as provided by Bogdan Bochenek <bogdan.bochenek@uj.edu.pl>        
+    plot ARPS model run results.
+    Currently the following plots are supported:
+    meteograms with n parametes, different SKEW-T,log p diagrams (C)
+    wind profiles for vertical and temporal meteorological data as derived by
+    rawinsondes or in this case numerical weather prediction models as ARPS
+    The raw ARPS raw data files are in netCSF format. This is extracted and
+    transformed  format to a matrix with a header followed by
+    specific variables.  Use "help(ExampleSonde)" for the full
+    explanation of the sounding data files.
+    The visualisation of sounding data is cloned by the package Radisonde
+    originally from Tim Hoar, Eric Gilleland,  Doug Nychka and Liangying Zhang
+    <thoar@ucar.edu> This was adapted to provide degree Celsius scaling
+    and the possibility to focus on the lower boundary pressure levels
+    with respect to ARPS model run results
+    The visualisation of the meteogram plots utilize Code from the package
+    meteogRam as provided by Bogdan Bochenek <bogdan.bochenek@uj.edu.pl>
 License: GPL (>= 2)
-Depends: R (>= 2.14), stats, methods, ncdf, ggplot2
-
+Depends:
+    R (>= 2.14),
+    stats,
+    methods,
+    ncdf,
+    ggplot2
