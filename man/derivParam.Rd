@@ -57,7 +57,7 @@
 with pt is the potential temperature (K), p is the pressure (Pa),  qv is the water vapor mixing ratio (g/kg), rn is the rain (mm) as derived from the model inputfile.
 }
 \usage{
-  derivParam(nc,param=c("tc","tk", "es","e","rh","td","p","rn"))
+  derivParam(nc,param=c("tc","tk", "es","e","rh","td","p","rn","ep"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

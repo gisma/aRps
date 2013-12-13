@@ -1,4 +1,4 @@
-derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn")){
+derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn", "ep")){
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
   #
@@ -19,50 +19,49 @@ derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn")){
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   #  
   
-  #filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
-  #nc <- open.ncdf( filename )
+  filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
+  nc <- open.ncdf( filename )
   # get pressure (Pa)
   #p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1) )
-  p = get.var.ncdf( nc, "P")
+  p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1))
   # get potentialk Temperatur in K
-  pt = get.var.ncdf( nc, "PT" )
+  pt = get.var.ncdf( nc, "PT", start=c(1,1,2,1), count=c(5,5,1,1) )
   # get Water Vapor Mixing Ratio (g/kg) 
-  qv <- get.var.ncdf( nc, "QV" )
+  qv <- get.var.ncdf( nc, "QV", start=c(1,1,2,1), count=c(5,5,1,1) )
   # get rain in mm
-  rn = get.var.ncdf( nc, "RAING" )
+  rn = get.var.ncdf( nc, "RAING", start=c(1,1,2,1), count=c(5,5,1,1) )
     
   # calculate dry bulb temperature from potential temperature using exner function
   # first calculate Exner pressure (e_p)
   
-  e_p = (p / 100000) ^ (287.058 / 1005)
+  ep = (p / 100000) ^ (287.058 / 1005)
   # calculate dry bulb temperature using exner pressure
   # Air Temp in ° C
-  tc = e_p * pt -273.15
+  tc = ep * pt -273.15
   # Air Temp in Kelvin (K)
-  tk = e_p * pt
-
+  tk = ep * pt
+ 
+  
   # Computes the saturation vapour pressure over water at temperature t (K).
   # es in hPas, t in K
   if (any(param=="es")){
-    a0 = 23.832241 - 5.02808 * log10(tk)
-    a1 = 0.00000013816 * 10 ^ (11.344 - 0.0303998 * tk)
-    a2 = 0.0081328 * 10 ^ (3.49149 - 1302.8844 / tk)
-    es = (10 ^ (a0 - a1 + a2 - 2949.076 / tk))
+  #  a0 = 23.832241 - 5.02808 * log10(tk)
+  #  a1 = 0.00000013816 * 10 ^ (11.344 - 0.0303998 * tk)
+  #  a2 = 0.0081328 * 10 ^ (3.49149 - 1302.8844 / tk)
+  #  es = (10 ^ (a0 - a1 + a2 - 2949.076 / tk))
     
   # alternative calculation 
-  # more accurate 
-  # but the single params for water and ice must be set
+  # a,b params for water, water dewpoint and ice must be set
   #  T > 0 above water
-  # a =  7.5
-  # b = 237.3
-  # T < 0 above water (dewpoint)
-  #  a = 7.6
-  # b = 240.7 
+  a <- replace(tc, tc >= 0, 7.5)
+  b <- replace(tc, tc >= 0,  237.3)
   # T < 0 above ice Eis (freezing point)
-  # a = 9.5
-  # b = 265.5 
+  a <- replace(a, tc <0, 9.5)
+  b <- replace(b, tc <0,  285.5)
   # Saturation vapor pressure alternative calculatio (hPa)
-  # es = 6.1078 * 10^((a*tc)/(b+tc))
+  es = 6.1078 * 10^((a*tc)/(b+tc))
+  # Saturation vapor pressure alternative calculatio (hPa)
+  esd = 6.1078 * 10^((ad*tc)/(bd+tc))
   }
   
   if (any(param=="e")){
@@ -79,15 +78,11 @@ derivParam<-function(nc,param=c("tc","tk", "es","e","rh","td","p","rn")){
   if (any(param=="td")){
   #  Dew-point temprature (Td in C)  from vapor pressure (e) 
   # T> 0 above water
-  # the param setting for ice and dewpoint is still to do
-  a =  7.5
-  b = 237.3
-  #für T < 0 über Wasser (Taupunkt)
-  #  a = 7.6
-  #b = 240.7 
-  #für T < 0 über Eis (Frostpunkt)
-  # a = 9.5
-  #  b = 265.5 
+    a <- replace(td, td >= 0, 7.6)
+    b <- replace(td, td >= 0,  240.7)
+    # T < 0 above ice Eis (freezing point)
+    a <- replace(a, td <=0, 9.5)
+    b <- replace(b, td <=0,  285.5)
   v = log10(e/6.1078)
   # Dewpoint Temperature C
   td = b*v/(a-v)  
