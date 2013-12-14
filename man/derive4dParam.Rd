@@ -62,8 +62,20 @@
   \item \eqn{e = water vapor pressure (hPa)}
   \item \eqn{es = water vapor saturation pressure (hPa)}
   }
+ \item wind speed (m/s): \eqn{ ws=sqrt(u^2+v^2)}
+  \itemize{ 
+  \item \eqn{u = zonal velocity of horizontal wind  (m/s)}
+  \item \eqn{v = meridional velocity of horizontal wind (m/s)}
+  }  
+ \item wind direction (m/s): \eqn{ wd=180+atan2(u,v)*57.295}
+  \itemize{ 
+  \item \eqn{u = zonal velocity of horizontal wind  (m/s)}
+  \item \eqn{v = meridional velocity of horizontal wind (m/s)}
+  \item the use of atan2 avoids the quadrant search for calculating the correct angle
+  }    
 }
-with pt is the potential temperature (K), p is the pressure (Pa),  qv is the water vapor mixing ratio (g/kg), rn is the rain (mm) as derived from the model inputfile.
+
+For all with: pt = potential temperature (K), p = pressure (Pa),  qv = water vapor mixing ratio (g/kg) as derived from the model inputfile.
 }
 \usage{
   derive4dParam(nc,param=c("tc","td","tk","es","e","rh","pr","ep","u","v","w","ws","wd"))

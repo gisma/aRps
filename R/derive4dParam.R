@@ -17,7 +17,13 @@ derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep","u","v
   # You should have received a copy of the GNU General Public License
   # along with RadioSonde; if not, write to the Free Software
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-  #  
+
+### derive4dParams extract the essential atmospheric variables from 
+### the ARPS netCDF file.
+### additionally it calculates the parameter dewpoint, water vapor pressure, 
+### saturation water vapor pressure, dry bulb air temperature, relative humidity
+### wind speed, wind direction
+### it converts pressure from Pa to hPa and provides dry bulb air temparature also in Kelvin
   
   #filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
   #nc <- open.ncdf( filename )

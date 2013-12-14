@@ -1,6 +1,5 @@
 extractExt=function(file,proj){
 
-  
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
   #
@@ -21,7 +20,8 @@ extractExt=function(file,proj){
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   #  
   # extractExt identifies the extension of an arbitrary ARPS model run ut in netCDF format
-  require(ncdf)
+ 
+  
   testncdf=open.ncdf(file)
   x = length(get.var.ncdf( testncdf, "x"))
   y = length(get.var.ncdf( testncdf, "y"))

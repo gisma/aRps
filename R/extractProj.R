@@ -1,6 +1,5 @@
 extractProj=function(file){
-  
-  #
+
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
   #
   # This file is part of the aRps library for R and related languages.
@@ -18,9 +17,9 @@ extractProj=function(file){
   # You should have received a copy of the GNU General Public License
   # along with RadioSonde; if not, write to the Free Software
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-  #  
-  # extractProj identifies the projection of an arps model run netCDF outputfile
-  # actuallay it uses the gdalinfo binary which have to be installed on the system
+
+### extractProj identifies the projection of an arps model run netCDF outputfile
+### actuallay it uses the gdalinfo binary which have to be installed on the system
   
   system(paste("gdalinfo ",file," >aRpsTmp.txt"))
   x=readLines("aRpsTmp.txt", n = -1)[]
