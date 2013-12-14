@@ -1,5 +1,28 @@
 getarpsoundparam <- function(col,row,lev,tim,winds=FALSE){
 
+  #
+  # Copyright 2013 Hanna Meyer, and Chris Reudenbach
+  #
+  # This file is part of the aRps library for R and related languages.
+  #
+  # aRps is free software; you can redistribute it and/or modify
+  # it under the terms of the GNU General Public License as published by
+  # the Free Software Foundation; either version 2 of the License, or
+  # (at your option) any later version.
+  #
+  # aRps is distributed in the hope that it will be useful,
+  # but WITHOUT ANY WARRANTY; without even the implied warranty of
+  # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  # GNU General Public License for more details.
+  #
+  # You should have received a copy of the GNU General Public License
+  # along with RadioSonde; if not, write to the Free Software
+  # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  #  
+# getarpsoundparam extract a unique column of the arps data cube. the derived single
+# data columns are converted to a data.frame as used bei the plotradiosone function
+# 
+  
 #col=5
 #row=5
 #tim=2
