@@ -2,7 +2,7 @@
 \alias{derive4dParam}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Calculate meteorological parameters as derived from the arps output
+  Calculate meteorological parameters as derived from the ARPS (Advanced Regional Prediction System) netCDF output file
 }
 \description{
   Calculates exner pressure (Pa,) air temperature in degree Celsius (C) , air temperature (K), dew point temperature (C),relative air humidity (percent), water vapor saturation pressure (hPa), water vapor pressure (hPa,  windspeed (m/s) and wind direction (deg) from arps output
@@ -35,10 +35,10 @@ provides additionally: potential temperature (K), pressure (hPa), zonal and meri
   }
   \item \eqn{a =   7.5 (if tc >= 0)}
   \item \eqn{b = 237.3 (if tc >= 0)}
-  }  
+    
   \item \eqn{a =   9.5 (if tc < 0)}
   \item \eqn{b = 285.5 (if tc < 0)}
-
+}
      
   \item water vapor pressure (hPa):  \eqn{e = (p/0.622 * qv)/100} 
   \itemize{ 
@@ -54,10 +54,10 @@ provides additionally: potential temperature (K), pressure (hPa), zonal and meri
   }
   \item \eqn{a =   7.6 (if tc >= 0)}
   \item \eqn{b = 240.7 (if tc >= 0)}
-  }  
+    
   \item \eqn{a =   9.5 (if tc < 0)}
   \item \eqn{b = 285.5 (if tc < 0)}
- 
+ }
   \item relative air humidity (percent): \eqn{ rh=(e/es)*100}
   \itemize{ 
   \item \eqn{e = water vapor pressure (hPa)}
