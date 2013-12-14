@@ -1,5 +1,5 @@
 "skewt.axis" <-
-function(BROWN = "brown", GREEN = "green", redo = TRUE, ...)
+function(BROWN = "brown", GREEN = "green", redo = FALSE, ...)
 {
 #
 # Copyright 2001,2002 Tim Hoar, and Doug Nychka
