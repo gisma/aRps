@@ -5,7 +5,8 @@
   Calculate meteorological parameters as derived from the arps output
 }
 \description{
-  Calculates exner pressure (Pa,) air temperature in degree Celsius (C) , Calculate air temperature (K), potential temperature (K), dew point temperature (C),relative air humidity (percent), water vapor saturation pressure (hPa), water vapor pressure (hPa) and pressure (Pa) from arps output
+  Calculates exner pressure (Pa,) air temperature in degree Celsius (C) , air temperature (K), dew point temperature (C),relative air humidity (percent), water vapor saturation pressure (hPa), water vapor pressure (hPa,  windspeed (m/s) and wind direction (deg) from arps output
+provides additionally: potential temperature (K), pressure (hPa), zonal and meridional and vertical windspeed (m/s)
 }
 \details{
 \itemize{
