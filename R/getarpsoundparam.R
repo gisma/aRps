@@ -1,8 +1,8 @@
 getarpsoundparam <- function(col,row,lev,tim,winds=FALSE){
 
-col=5
-row=5
-tim=2
+#col=5
+#row=5
+#tim=2
 ### todo loop etc
 ### todo windspeed
 ### todo winddirection

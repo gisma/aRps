@@ -19,8 +19,8 @@ derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep","u","v
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   #  
   
-  filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
-  nc <- open.ncdf( filename )
+  #filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
+  #nc <- open.ncdf( filename )
   # get pressure (Pa)
   #p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1) )
   p = get.var.ncdf( nc, "P")
