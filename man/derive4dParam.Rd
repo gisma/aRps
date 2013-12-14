@@ -66,7 +66,7 @@
 with pt is the potential temperature (K), p is the pressure (Pa),  qv is the water vapor mixing ratio (g/kg), rn is the rain (mm) as derived from the model inputfile.
 }
 \usage{
-  derive4dParam(nc,param=c("tc","td","tk", "es","e","rh","pr","ep"))
+  derive4dParam(nc,param=c("tc","td","tk","es","e","rh","pr","ep","u","v","w","ws","wd"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -93,5 +93,7 @@ with pt is the potential temperature (K), p is the pressure (Pa),  qv is the wat
     arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
     cparam=derive4dParam(arpsexample)
     str(cparam) # see which parameters are listed
-    cparam$tc # to extract air dry bulb temperature (C) from the list
+    cparam$tc # to extract air dry bulb temperature (C)
+    from the list
+    getarpsoundparam (10,10,1,2) # plots a sounding at position 10,10 at timestep2
 }

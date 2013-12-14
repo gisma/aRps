@@ -1,4 +1,4 @@
-derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep")){
+derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep","u","v","w","ws","wd")){
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
   #
@@ -19,8 +19,8 @@ derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep")){
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   #  
   
-  #filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
-  #nc <- open.ncdf( filename )
+  filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
+  nc <- open.ncdf( filename )
   # get pressure (Pa)
   #p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1) )
   p = get.var.ncdf( nc, "P")
@@ -31,9 +31,22 @@ derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep")){
   # get u wind vector (m/s)
   u <- get.var.ncdf( nc, "U")    
   # get V wind vector (m/s)
-  v <- get.var.ncdf( nc, "v")    
+  v <- get.var.ncdf( nc, "V")    
   # get V wind vector (m/s)
-  w <- get.var.ncdf( nc, "w")    
+  w <- get.var.ncdf( nc, "W")   
+  # do some pseudo destaggering
+  uxdim=dim(u)[1]
+  uydim=dim(u)[2]
+  vxdim=dim(v)[1]
+  vydim=dim(v)[2]
+  ldim=dim(u)[3]
+  tdim=dim(u)[4]
+  u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
+  v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
+  # calculate windspeed (m/s)
+  ws=sqrt(u^2+v^2)
+  # calculate winddirection in degree
+  wd=180+atan2(u,v)*57.295
   
   # calculate dry bulb temperature from potential temperature using exner function
   # first calculate Exner pressure (e_p)
