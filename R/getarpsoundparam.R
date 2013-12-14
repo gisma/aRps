@@ -47,7 +47,7 @@ v1=slice (v, i=col:col ,j=row:row,k=1:lev,l=tim:tim)
 ws1=slice (ws, i=col:col ,j=row:row,k=1:lev,l=tim:tim)
 wd1=slice (wd, i=col:col ,j=row:row,k=1:lev,l=tim:tim)
 rh1=slice (rh, i=col:col ,j=row:row,k=1:lev,l=tim:tim)
-rs <- melt(pr1, value.name = "press")
+sounding <- melt(pr1, value.name = "press")
 tc_ <- melt(tc1, value.name = "temp")
 td_  <- melt(td1, value.name = "dewpt")
 rh_  <- melt(rh1, value.name = "rh")
@@ -56,19 +56,18 @@ v_  <- melt(v1, value.name = "vwind")
 ws_  <- melt(ws1, value.name = "wspd")
 wd_  <- melt(wd1, value.name = "dir")
 #rs[ "press"] <- pr_
-rs[, "temp"] <- tc_
-rs[, "dewpt"] <- td_
-rs[, "rh"] <- rh_
-rs[, "uwind"] <- u_
-rs[, "vwind"] <- v_
-rs[, "wspd"] <- ws_
-rs[, "dir"] <- wd_
-View(rs)
+sounding[, "temp"] <- tc_
+sounding[, "dewpt"] <- td_
+sounding[, "rh"] <- rh_
+sounding[, "uwind"] <- u_
+sounding[, "vwind"] <- v_
+sounding[, "wspd"] <- ws_
+sounding[, "dir"] <- wd_
 
 if( winds==TRUE){
-plotsonde(rs, winds=TRUE)
+plotsonde(sounding, winds=TRUE)
 }
 else if ( winds==FALSE){
-  plotsonde(rs, winds=FALSE)
+  plotsonde(sounding, winds=FALSE)
 }
 }

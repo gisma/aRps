@@ -33,7 +33,7 @@ function (dataframe, skewT=TRUE, winds=FALSE, site = "", title = "",
 
        mar.skewt <- c(5.0999999999999996, 1.1000000000000001, 
                       2.1000000000000001, 5.0999999999999996)
-       skewt.plt <- skewt.axis(mar = mar.skewt)$plt
+       skewt.plt <- skewt.axis(mar = mar.skewt, redo=TRUE)$plt
        title(title)
        skewt.plt =c(0.8000000, 0.9500000, 0.1532394, 0.9369014)
        if(is.null(windplot)) {
@@ -51,7 +51,8 @@ function (dataframe, skewT=TRUE, winds=FALSE, site = "", title = "",
        # Draw the SKEW-T, log p diagram
        # Draw background and overlay profiles
 
-       skewt.axis()
+       if( skewT & winds){  skewt.axis(redo = TRUE)}
+       else {skewt.axis()}
        skewt.lines(dataframe$temp,  dataframe$press, col = col[1], ...)
        skewt.lines(dataframe$dewpt, dataframe$press, col = col[2], ...)
 
