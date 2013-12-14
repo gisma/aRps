@@ -106,7 +106,6 @@ For all with: pt = potential temperature (K), p = pressure (Pa),  qv = water vap
     arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
     cparam=derive4dParam(arpsexample)
     str(cparam) # see which parameters are listed
-    cparam$tc # to extract air dry bulb temperature (C)
-    from the list
-    getarpsoundparam (10,10,1,2) # plots a sounding at position 10,10 at timestep2
+    cparam$tc # to extract air dry bulb temperature (C)from the list
+    getarpsoundparam (10,10,1,2) # plots a sounding at position 10,10 at timestep 2
 }
