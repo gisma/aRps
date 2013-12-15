@@ -24,12 +24,14 @@
 #    draw the dewpoint in color 7
 #    overlay the temperature observations in a different color
 #    you get the point ...
-data(ExampleSonde)
-skewt.axis()
-skewt.lines( ExampleSonde$temp,  ExampleSonde$press, col = 6)
-skewt.lines( ExampleSonde$dewpt, ExampleSonde$press, col = 7)
-skewt.points(ExampleSonde$temp,  ExampleSonde$press, col = 3)
-skewt.points(ExampleSonde$dewpt, ExampleSonde$press, col = 4)
-}
 
+arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
+cparam=derive4dParam(arpsexample)
+sounding = getexamplesounding(10, 10, 2) 
+skewt.axis()
+skewt.lines( sounding$temp,  sounding$press, col = 6)
+skewt.lines( sounding$dewpt, sounding$press, col = 7)
+skewt.points(sounding$temp,  sounding$press, col = 3)
+skewt.points(sounding$dewpt, sounding$press, col = 4)
+}
 \keyword{ aplot }

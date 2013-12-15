@@ -37,7 +37,7 @@ ratio (dashed) }
         adjacent to the skewt axis. }
 
 \author{ Tim Hoar }
-\seealso{ \code{\link{getsonde}}, 
+\seealso{ \code{\link{getexamplesounding}}, 
           \code{\link{plotsonde}}, 
           \code{\link{skewt.lines}}, 
           \code{\link{skewt.points}}  }
@@ -49,12 +49,14 @@ ratio (dashed) }
 #    overlay the temperature observations in a different color
 #    you get the point ...
 #
-data(ExampleSonde)
+arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
+cparam=derive4dParam(arpsexample)
+sounding = getexamplesounding(10, 10, 2) 
 skewt.axis( mar=c(5.1, 1.1, 2.1, 5.1) )
-skewt.lines( ExampleSonde$temp,  ExampleSonde$press, col = 6)
-skewt.lines( ExampleSonde$dewpt, ExampleSonde$press, col = 7)
-skewt.points(ExampleSonde$temp,  ExampleSonde$press, col = 3)
-skewt.points(ExampleSonde$dewpt, ExampleSonde$press, col = 4)
+skewt.lines( sounding$temp,  sounding$press, col = 6)
+skewt.lines( sounding$dewpt, sounding$press, col = 7)
+skewt.points(sounding$temp,  sounding$press, col = 3)
+skewt.points(sounding$dewpt, sounding$press, col = 4)
 #
 # Changing the moist adiabats: you must edit the \code{skewt.axis} function
 # directly and then capture the output in \code{skewt.data} to be used in 

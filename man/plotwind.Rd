@@ -32,13 +32,15 @@
 
 \author{ Eric Gilleland, Tim Hoar, Doug Nychka }
 
-\seealso{ \code{\link{getsonde}}, \code{\link{plotsonde}} }
+\seealso{ \code{\link{getexamplesounding}}, \code{\link{plotsonde}} }
 
 \examples{
 # Example 1:
-data(ExampleSonde)
-plotwind(ExampleSonde)
+arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
+cparam=derive4dParam(arpsexample)
+sounding = getexamplesounding(10, 10, 2) 
+plotwind(sounding)
 # Example 2:
-plotwind(ExampleSonde, size = 7, legend=TRUE)
+plotwind(sounding, size = 7, legend=TRUE)
 }
 \keyword{ hplot }          % at least one, from doc/KEYWORDS

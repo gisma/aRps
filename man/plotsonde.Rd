@@ -8,7 +8,9 @@
    the vertical wind profile using wind barbs. Also optionally creates
    a more detailled zoom plot to a minimum pressure of 400 hPa
 }
-\usage{ dataframe, skewT=TRUE, zoom=TRUE, winds=FALSE, site = "", title = "", windplot = NULL, s = 2, col = c("red", "darkblue"), lwd=c(2,3), lty=c(1,3),...) }
+\usage{ plotsonde (dataframe, skewT = TRUE, zoom, winds = FALSE, site =
+                 "", title = "", windplot = NULL, s = 2, col = c("red",
+                 "darkblue"), lwd = c(2, 3), lty = c(1, 3), ...) }
 
 \arguments{
   \item{dataframe}{ R dataframe with  at least the components 

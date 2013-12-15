@@ -8,21 +8,24 @@ Plots Arps soundings
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-getarpsoundparam(col, row, lev, tim, zoom, winds=FALSE)
+getarpsoundparam(col, row, tim, zoom, winds=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{col}{
-%%     ~~Describe \code{col} here~~
+The number of the column to be extracted
 }
   \item{row}{
-%%     ~~Describe \code{row} here~~
-}
-  \item{lev}{
-%%     ~~Describe \code{lev} here~~
+The number of the row to be extracted
 }
   \item{tim}{
-%%     ~~Describe \code{tim} here~~
+The time step of the dataset that should be extracted
+}
+  \item{zoom}{
+if (zoom==TRUE) the skewt log digramm is plotted only for a pressure between 1050 and 400 hPa
+}
+  \item{winds}{
+if (wind==TRUE) a windbarb column is added beside the digramm
 }
 }
 \details{
@@ -53,8 +56,7 @@ getarpsoundparam(col, row, lev, tim, zoom, winds=FALSE)
 \examples{
     arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
     cparam=derive4dParam(arpsexample)
-    str(cparam) # see which parameters are listed
-    getarpsoundparam (10,10,1,2, zoom=FALSE, winds=TRUE) # plots a sounding at position 10,10 at timestep2
+    getarpsoundparam (10,10,2, zoom=FALSE, winds=TRUE) # plots a sounding at position 10,10 at timestep2
 
   }
 

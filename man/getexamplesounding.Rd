@@ -9,7 +9,7 @@
 The routine extracts from an arbitrary column and timestep of the ARPS example data file the standard sounding data. The resulting data.frame can be used by the plotsonde function to plot a rawinsounding as a skewt-log diagram
 }
 \usage{
-getexamplesounding(col, row, tim)
+getexamplesounding(col, row, tim, zoom, winds = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
