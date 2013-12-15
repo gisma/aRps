@@ -8,7 +8,7 @@ Plots Arps soundings
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-getarpsoundparam(col, row, lev, tim, winds=FALSE)
+getarpsoundparam(col, row, lev, tim, zoom, winds=FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -54,10 +54,10 @@ getarpsoundparam(col, row, lev, tim, winds=FALSE)
     arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
     cparam=derive4dParam(arpsexample)
     str(cparam) # see which parameters are listed
-    getarpsoundparam (10,10,1,2, winds=TRUE) # plots a sounding at position 10,10 at timestep2
+    getarpsoundparam (10,10,1,2, zoom=FALSE, winds=TRUE) # plots a sounding at position 10,10 at timestep2
 
   }
-}
+
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
 \keyword{ ~kwd1 }

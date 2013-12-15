@@ -1,4 +1,4 @@
-getarpsoundparam <- function(col,row,tim,zoom,winds=FALSE){
+getexamplesounding <- function(col,row,tim,zoom,winds=FALSE){
 
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
@@ -19,11 +19,9 @@ getarpsoundparam <- function(col,row,tim,zoom,winds=FALSE){
   # along with RadioSonde; if not, write to the Free Software
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   #  
-  # getarpsoundparam extract a unique column of the arps data cube. the derived single
-  # data columns are converted to a data.frame as used bei the plotradiosone function
-  # 
-  
-### todo loop etc
+# getarpsoundparam extract a unique column of the arps data cube. the derived single
+# data columns are converted to a data.frame as used bei the plotradiosone function
+# 
 
 lev=dim(cparam$tc)[3]
 tc=cparam$tc
@@ -59,14 +57,7 @@ sounding[, "uwind"] <- u_
 sounding[, "vwind"] <- v_
 sounding[, "wspd"] <- ws_
 sounding[, "dir"] <- wd_
-View(sounding)
-if(winds){
-  if (zoom ){plotsonde(sounding, zoom=TRUE, winds=TRUE)}
-  else if (!zoom) { plotsonde(sounding, zoom=FALSE, winds=TRUE)}
-}
-else if ( !winds){
-if (zoom ){plotsonde(sounding, zoom=TRUE, winds=FALSE)}
-else if (!zoom) { plotsonde(sounding, zoom=FALSE, winds=FALSE)}
-}
+
+return(sounding)
 
 }

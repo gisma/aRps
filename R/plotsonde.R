@@ -1,6 +1,6 @@
 plotsonde <- 
-function (dataframe, skewT=TRUE, winds=FALSE, site = "", title = "", 
-            windplot = NULL, s = 3., col = c(1, 2), ... ){
+function (dataframe, skewT=TRUE, zoom, winds=FALSE, site = "", title = "", 
+            windplot = NULL, s = 2, col = c("red", "darkblue"), lwd=c(2,3), lty=c(1,3),...){
 #
 # Copyright 2001,2002 Tim Hoar, Eric Gilleland, and Doug Nychka
 #
@@ -33,7 +33,9 @@ function (dataframe, skewT=TRUE, winds=FALSE, site = "", title = "",
 
        mar.skewt <- c(5.0999999999999996, 1.1000000000000001, 
                       2.1000000000000001, 5.0999999999999996)
-       skewt.plt <- skewt.axis(mar = mar.skewt, redo=TRUE)$plt
+      
+       if(zoom){ skewt.plt <- skewt.axis.z(mar = mar.skewt, redo=TRUE)$plt}
+       else if (!zoom) { skewt.plt <- skewt.axis(mar = mar.skewt, redo=TRUE)$plt}
        title(title)
        skewt.plt =c(0.8000000, 0.9500000, 0.1532394, 0.9369014)
        if(is.null(windplot)) {
@@ -51,10 +53,13 @@ function (dataframe, skewT=TRUE, winds=FALSE, site = "", title = "",
        # Draw the SKEW-T, log p diagram
        # Draw background and overlay profiles
 
-       if( skewT & winds){  skewt.axis(redo = TRUE)}
-       else {skewt.axis()}
-       skewt.lines(dataframe$temp,  dataframe$press, col = col[1], ...)
-       skewt.lines(dataframe$dewpt, dataframe$press, col = col[2], ...)
+       if( skewT & winds & zoom){  skewt.axis.z(redo = TRUE)}
+       else if (skewT & zoom) {skewt.axis.z()}
+       else if (skewT & winds) {skewt.axis((redo = TRUE))}
+       else if (skewT ) {skewt.axis()}
+       
+       skewt.lines(dataframe$temp,  dataframe$press, col = col[1], lwd = lwd[1],lty = lty[1], ...)
+       skewt.lines(dataframe$dewpt, dataframe$press, col = col[2], lwd = lwd[2],lty = lty[2],...)
 
        #
        # Draw the windplot in the "space allocated"
@@ -75,9 +80,10 @@ function (dataframe, skewT=TRUE, winds=FALSE, site = "", title = "",
        # Draw background and overlay profiles
        #
 
-       skewt.axis()
-       skewt.lines(dataframe$temp,  dataframe$press, col = col[1], ...)
-       skewt.lines(dataframe$dewpt, dataframe$press, col = col[2], ...)
+      if( zoom){skewt.axis.z()}
+      else if (!zoom){skewt.axis()}
+       skewt.lines(dataframe$temp,  dataframe$press, col = col[1],lwd = lwd[1],lty = lty[1], ...)
+       skewt.lines(dataframe$dewpt, dataframe$press, col = col[2],lwd = lwd[2],lty = lty[2], ...)
        title(title)
 
     } else if( !skewT & winds) {

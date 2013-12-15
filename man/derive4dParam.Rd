@@ -5,9 +5,21 @@
   Calculate meteorological parameters as derived from the ARPS (Advanced Regional Prediction System) netCDF output file
 }
 \description{
-  Calculates exner pressure (Pa,) air temperature in degree Celsius (C) , air temperature (K), dew point temperature (C),relative air humidity (percent), water vapor saturation pressure (hPa), water vapor pressure (hPa,  windspeed (m/s) and wind direction (deg) from arps output
-provides additionally: potential temperature (K), pressure (hPa), zonal and meridional and vertical windspeed (m/s)
-}
+  derive4dParam extracts 4 D meterorlogical parameters from the ARPS netCDF  modelrun result file. Currently the following params are calculated:
+\itemize{
+  \item exner pressure (Pa)
+  \item air temperature in degree Celsius (C)
+  \item air temperature (K)
+  \item dew point temperature (C)
+  \item relative air humidity (percent)
+  \item water vapor saturation pressure (hPa)
+  \item water vapor pressure (hPa)
+  \item windspeed (m/s) and wind direction (deg) }
+  derive4DParam derives additionally the following original params as provided by ARPS:   \itemize{
+  \item potential temperature (K)
+  \item pressure (hPa)
+  \item zonal, meridional and vertical windspeed (m/s)
+}}
 \details{
 \itemize{
   \item exner pressure (Pa):  \eqn{e_p = (p / 100000) ^ (287.058 / 1005)}
@@ -79,7 +91,7 @@ provides additionally: potential temperature (K), pressure (hPa), zonal and meri
 For all with: pt = potential temperature (K), p = pressure (Pa),  qv = water vapor mixing ratio (g/kg) as derived from the model inputfile.
 }
 \usage{
-  derive4dParam(nc,param=c("tc","td","tk","es","e","rh","pr","ep","u","v","w","ws","wd"))
+  derive4dParam(nc, param=c("tc","td","tk","es","e","rh","pr","ep","u","v","w","ws","wd"))
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -87,26 +99,41 @@ For all with: pt = potential temperature (K), p = pressure (Pa),  qv = water vap
     A netcdf object
   }
   \item{param}{
-    A string vector of the parameters to be calculated
+    A string vector of the parameters to be calculated. For details see Description and Details.
   }
 }
 
 \value{
-  A list containing the calculated parameters as arrays
+  A list containing the calculated parameters as 4D arrays.
 }
 
 \author{
   Hanna Meyer and Chris Reudenbach
 }
 \seealso{
-  For adaption of the projection and domain extent according to the identified reference system see \code{\link{extractExt}}. It is strongly recommended to use always first extractProj and then extractExt!!
+  If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS. It is strongly recommended to use always first extractProj and then extractExt!! \code{\link{extractExt}}
 }
 \examples{
   #### Example to calculate derivated parameters from a nc file
+    
     arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
+    ## opens the example dataset
+    
     cparam=derive4dParam(arpsexample)
-    str(cparam) # see which parameters are listed
-    cparam$tc # to extract air dry bulb temperature (C)from the list
-    getarpsoundparam (10,10,1,2,winds=TRUE) # plots a sounding at position 10,10 at timestep 2 with wind vectors
-    View(sounding) # view the sounding data table
+    ## get the full set of variables
+    
+    str(cparam) 
+    ## see which parameters are listed
+    
+    View(cparam$tc) 
+    ## Show the air dry bulb temperature (C) Arry as derived from the list
+    
+    getarpsoundparam (10,10,1,2, zoom=FALSE, winds=TRUE) 
+    ## plots a sounding at position 10,10 at timestep 2 
+    ## full extend, with wind vectors
+    
+    getarpsoundparam (10,10,1,2, zoom=TRUE, winds=FALSE) 
+    ## plots a sounding at position 10,10 at timestep 2 
+    ## with detailed extend, without wind vectors (reconmmended)
+    
 }
