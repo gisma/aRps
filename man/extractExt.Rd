@@ -8,7 +8,7 @@
   Calculates the extent of a netcdf file according to its reference system
 }
 \usage{
-  extractExt(file,proj)
+  extractExt(file)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -28,11 +28,11 @@
   Chris Reudenbach and Hanna Meyer
 }
 \seealso{
-  To identify the reference system see \code{\link{extractProj}}. Use alwas first extractProj and then extractExt!!
+  To identify the reference system see \code{\link{extractProj}}.
 }
 \examples{
   #### Example to determine the extent coordinates from a nc file
   arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
   proj=extractProj(arpsexample)
-  ext=extractExt(arpsexample,proj)
+  ext=extractExt(arpsexample)
 }

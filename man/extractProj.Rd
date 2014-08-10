@@ -25,7 +25,7 @@
   Chris Reudenbach and Hanna Meyer
 }
 \seealso{
-  For adaption of the extent according to the identified reference system see \code{\link{extractExt}}. Use alwas first extractProj and then extractExt!!
+  For adaption of the extent according to the identified reference system see \code{\link{extractExt}}.
 }
 \examples{
   #### Example to extract the proj4 information from a nc file
