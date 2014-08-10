@@ -1,4 +1,4 @@
-extractExt=function(file,proj){
+extractExt=function(file,proj,lat,lon){
 
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
