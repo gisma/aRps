@@ -2,7 +2,7 @@
 \alias{derive4dParam}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Calculate meteorological parameters as derived from the ARPS (Advanced Regional Prediction System) netCDF output file
+ Extract meteorological parameters as derived from the ARPS (Advanced Regional Prediction System) netCDF output file
 }
 \description{
   derive4dParam extracts 4 D meterorlogical parameters from the ARPS netCDF  modelrun result file. Currently the following params are calculated:
@@ -111,27 +111,22 @@ For all with: pt = potential temperature (K), p = pressure (Pa),  qv = water vap
   Hanna Meyer and Chris Reudenbach
 }
 \seealso{
-  If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS. It is strongly recommended to use always first extractProj and then extractExt!!
+  If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS. See \code{\link{getRefInfo}}.
 
-\code{\link{extractExt}}
-\code{\link{extractProj}}
 
 }
 \examples{
   #### Examples how  to use the function derive4Dparam:
-  ## (1) opens the example dataset
+  ## (1)define location of example dataset
   ## (2) get the full set of variables data.frames as a list
   ## (3)  get the metadata of the params
   ## (4) put the air dry bulb temperature (C) as derived by the list in a variable
-  ## (5) plots a sounding at position 10,10 at timestep 2 full extend, with wind vectors
-  ## (6) plots a sounding at position 10,10 at timestep 2 with detailed (zoomed) extend, without wind vectors (reconmmended)
+
     
   
-    arpsexample=open.ncdf(system.file("allgaeu_d1_ARP.nc", package="aRps"))
+    arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
     cparam=derive4dParam(arpsexample)
     str(cparam) 
     temperature = cparam$tc 
-    getarpsoundparam (10,10,2, zoom=FALSE, winds=TRUE) 
-    getarpsoundparam (10,10,2, zoom=TRUE, winds=FALSE) 
     
 }

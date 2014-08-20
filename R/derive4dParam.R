@@ -1,4 +1,4 @@
-derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep","u","v","w","ws","wd")){
+derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","ws","wd")){
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
   #
@@ -26,100 +26,53 @@ derive4dParam<-function(nc,param=c("tc","td","tk","es","e","rh","pr","ep","u","v
 ### it converts pressure from Pa to hPa and provides dry bulb air temparature also in Kelvin
   
   #filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
-  #nc <- open.ncdf( filename )
+  #filename= '/home/creu/Daten/ARPS/marburg_d1.nc'
+  nc <- open.ncdf( filename )
   # get pressure (Pa)
   #p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1) )
-  p = get.var.ncdf( nc, "P")
-  # get potentialk Temperatur in K
-  pt = get.var.ncdf( nc, "PT")
-  # get Water Vapor Mixing Ratio (g/kg) 
-  qv <- get.var.ncdf( nc, "QV")
-  # get u wind vector (m/s)
-  u <- get.var.ncdf( nc, "U")    
-  # get V wind vector (m/s)
-  v <- get.var.ncdf( nc, "V")    
-  # get V wind vector (m/s)
-  w <- get.var.ncdf( nc, "W")   
-  # do some pseudo destaggering
-  uxdim=dim(u)[1]
-  uydim=dim(u)[2]
-  vxdim=dim(v)[1]
-  vydim=dim(v)[2]
-  ldim=dim(u)[3]
-  tdim=dim(u)[4]
-  u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
-  v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
-  # calculate windspeed (m/s)
-  ws=sqrt(u^2+v^2)
-  # calculate winddirection in degree
-  wd=180+atan2(u,v)*57.295
   
-  # calculate dry bulb temperature from potential temperature using exner function
-  # first calculate Exner pressure (e_p)
-  
-  ep = (p / 100000.0) ^ (287.058 / 1005.0)
-  # calculate dry bulb temperature using exner pressure
+  wind=wind(nc)
+  u=wind[[3]]
+  writeLines('u vector done')
+  v=wind[[4]]
+  writeLines('v vector done')
+  ws=wind[[1]]
+  writeLines('windspeed done')
+  wd=wind[[2]]
+  writeLines('wind dir.  done')
+  rm(wind)
   # Air Temp in ° C
-  tc = ep * pt -273.15
-  # Air Temp in Kelvin (K)
-  tk = ep * pt
- 
+  #tc = tcelsius(nc)
+  writeLines('temperature done')
+  var2nc(filename,'u',u,new=TRUE)
   
   # Computes the saturation vapour pressure over water at temperature t (K).
-  # es in hPas, t in K
   if (any(param=="es")){
-  #  a0 = 23.832241 - 5.02808 * log10(tk)
-  #  a1 = 0.00000013816 * 10 ^ (11.344 - 0.0303998 * tk)
-  #  a2 = 0.0081328 * 10 ^ (3.49149 - 1302.8844 / tk)
-  #  es = (10 ^ (a0 - a1 + a2 - 2949.076 / tk))
-    
-  # alternative calculation 
-  # a,b params for water, water dewpoint and ice must be set
-  #  T > 0 above water
-  a <- replace(tc, tc >= 0, 7.5)
-  b <- replace(tc, tc >= 0,  237.3)
-  # T < 0 above ice Eis (freezing point)
-  a <- replace(a, tc <0, 9.5)
-  b <- replace(b, tc <0,  285.5)
-  # Saturation vapor pressure alternative calculatio (hPa)
-  es = 6.1078 * 10^((a*tc)/(b+tc))
-  
-  }
-  
-  if (any(param=="e")){
-    # Water vapor specific humidity qv (g/kg)
-    # water vapour partial pressure e (Pa)
-    # pressure p (Pa)
-    # Ra specific gas constant air 287.06
-    # Rw specifs constant water vapor  461.6
-    # e = p/(Ra/Rw)*qv (Pa)
-    # e = e/100 (hPa)
-    e = (p/0.622 * qv)/100
+    es = satwatervapor(nc)
+    writeLines('saturation vapour pressure done')
   }
 
-  if (any(param=="td")){
-  #  Dew-point temprature (Td in C)  from vapor pressure (e) 
-  # T> 0 above water
-    a <- replace(tc, tc >= 0, 7.6)
-    b <- replace(tc, tc >= 0,  240.7)
-    # T < 0 above ice Eis (freezing point)
-    a <- replace(a, tc <0, 9.5)
-    b <- replace(b, tc <0,  285.5)
-  v = log10(e/6.1078)
-  # Dewpoint Temperature C
-  td = b*v/(a-v)  
-  
-  #alterntive calculation dewpoint C
-  #td = (243.5 * log(e/6.112)) / (17.67 - log(e/6.112))
+  # water vapour partial pressure e (Pa)
+  if (any(param=="e")){
+    e =partwatervapor(nc)
+    writeLines('partial vapour pressure done')
   }
   
+  #  Dew-point temprature (Td in C)  from vapor pressure (e) 
+  if (any(param=="td")){
+  #  Dew-point temprature (Td in C)  from vapor pressure (e) 
+  td =dewpoint(nc)  
+  writeLines('dewpoint done')
+  }
+  # calculate relative air humidity
   if (any(param=="rh")){
-      # calculate relative air humidity
-        rh=(e/es)*100 
-      }
+     rh=relhum(nc)
+     writeLines('rel. humidity done')
+  }
+  # convert pressure from Pa to hPa
   if (any(param=="pr")){
-    # convert pressure from Pa to hPa
-    pr=p/100.0
+    pr=airpressure(nc)
+    writeLines('air pressure done')
   }
   
   

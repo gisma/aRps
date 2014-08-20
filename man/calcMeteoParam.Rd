@@ -1,0 +1,102 @@
+\name{calcMeteoParam}
+\alias{calcMeteoParam}
+\title{calcMeteoParam calculates the meteorological parameters based on the ARPS-netCDF output file}
+\source{
+\tabular{ll}{ Package: \tab aRps\cr Type: \tab Package\cr
+Version: \tab 0.2\cr Date: \tab
+\Sexpr[echo=TRUE]{paste0(getYear(Sys.Date()),"-",getMonth(Sys.Date()),"-",getDay(Sys.Date()))}\cr
+License: \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr }
+}
+\usage{
+wnd<-wind(nc)
+}
+\arguments{
+  \item{function}{name}
+
+  \item{nc}{netcdf object as opened by: nc <-
+  open.ncdf(arpsexample)}
+}
+\value{
+The function wind returns a list of the the unstaggered
+wind components (u,v,ws,wd). the other function are
+returning the requested type of calculated data Be careful
+this data Arrays can be VERY big.
+}
+\description{
+calcMeteoParam converts, and derives meterorlogical
+parameters from the ARPS netCDF modelrun result file.
+\itemize{ \item pressure (hPa) \item exner pressure (hPa)
+\item air temperature in degree Celsius (C) \item dew point
+temperature (C) \item water vapor saturation pressure (hPa)
+\item water vapor pressure (hPa) \item relative air
+humidity (%) \item u component of the horizontal windvector
+(m/s) \item v component of the horizontal windvector (m/s)
+\item windspeed (m/s) \item wind direction (deg) }
+}
+\details{
+The following equations are used:\cr \itemize{ \item exner
+pressure (Pa): \eqn{e_p = (p/100000)^(R/cp)} \tabular{lll}{
+\tab \eqn{p} \tab \eqn{= pressure (Pa)}\cr \tab \eqn{cp}
+\tab \eqn{= 1005 = specific heat capacity (J/kg K)}\cr \tab
+\eqn{R} \tab \eqn{= 287.058 0 specific gas constant (J/kg
+K)}\cr } \item air temperature (C): \eqn{tc =
+e_p*pt-273.15} \tabular{lll}{ \tab \eqn{pt} \tab \eqn{=
+potential temperature (K)}\cr \tab \eqn{e_p} \tab \eqn{=
+exner pressure (Pa)}\cr } \item air temperature (K):
+\eqn{tk = e_p*pt} \tabular{lll}{ \tab \eqn{pt} \tab \eqn{=
+potential temperature (K)}\cr \tab \eqn{e_p} \tab \eqn{=
+exner pressure (Pa)}\cr } \item water vapor saturation
+pressure (hPa): \eqn{es = 6.1078*10^((a*tc)/(b+tc))}
+\tabular{lll}{ \tab \eqn{a} \tab \eqn{= 7.5 (if tc >=
+0)}\cr \tab \eqn{b} \tab \eqn{= 237.3 (if tc >= 0)}\cr \tab
+\eqn{a} \tab \eqn{= 9.5 (if tc < 0)}\cr \tab \eqn{b} \tab
+\eqn{= 285.5 (if tc < 0)}\cr } \item water vapor pressure
+(hPa): \eqn{e = (p/0.622*qv)/100} \tabular{lll}{ \tab
+\eqn{p} \tab \eqn{ = pressure (Pa)}\cr \tab \eqn{qv} \tab
+\eqn{ = Water Vapor Mixing Ratio (g/kg)}\cr } \item dew
+point temperature (C): \eqn{td = b*v/(a-v)} \tabular{lll}{
+\tab \eqn{v} \tab \eqn{= log10(e/6.1078)}\cr \tab \eqn{e}
+\tab \eqn{= water vapor pressure (hPa)}\cr \tab \eqn{a}
+\tab \eqn{= 7.6 (if tc >= 0)}\cr \tab \eqn{b} \tab \eqn{=
+240.7 (if tc >= 0)}\cr \tab \eqn{a} \tab \eqn{= 9.5 (if tc
+< 0)}\cr \tab \eqn{b} \tab \eqn{= 285.5 (if tc < 0)}\cr }
+\item relative air humidity (percent): \eqn{ rh=(e/es)*100}
+\tabular{lll}{ \tab \eqn{e} \tab \eqn{= water vapor
+pressure (hPa)}\cr \tab \eqn{es} \tab \eqn{= water vapor
+saturation pressure (hPa)}\cr } \item wind speed (m/s):
+\eqn{ ws=sqrt(u^2+v^2)} \tabular{lll}{ \tab \eqn{u} \tab
+\eqn{= zonal velocity of horizontal wind (m/s)}\cr \tab
+\eqn{v} \tab \eqn{= meridional velocity of horizontal wind
+(m/s)}\cr } \item wind direction (m/s):
+\eqn{wd=180+atan2(u,v)*57.295} \tabular{lll}{ \tab \eqn{u}
+\tab \eqn{= zonal velocity of horizontal wind (m/s)}\cr
+\tab \eqn{v} \tab \eqn{= meridional velocity of horizontal
+wind (m/s)}\cr \tab \eqn{atan2} \tab the use of atan2
+avoids the quadrant search for calculating the correct
+angle\cr } \item For all operations is valid:
+\tabular{lll}{ \tab \eqn{pt} \tab \eqn{= potential
+temperature (K)}\cr \tab \eqn{p} \tab {= air pressure
+(Pa)}\cr \tab \eqn{qv} \tab {= water vapor mixing ratio
+(g/kg)}\cr \tab \eqn{u,v} \tab {the horizontal windvector
+components (m/s) are directly derived from the model
+inputfile}\cr }}
+}
+\examples{
+#### Examples how  to use the function in calcMeteoParam:
+ ###  (1) provide a valid netcdf file
+ ##   (2) open it
+ #    (3) use it (i.e. air pressure)
+ arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
+ nc <- open.ncdf(arpsexample)
+ pr<-airpressure(nc)
+}
+\author{
+Hanna Meyer, Chris Reudenbach
+}
+\seealso{
+If you want to use this data in a GIS or otherwise
+georeferenced you need to extract the projection and domain
+extent according to the reference system that was used by
+ARPS \code{\link{getRefInfo}}
+}
+

@@ -60,12 +60,13 @@ function (dataframe, skewT=TRUE, zoom, winds=FALSE, site = "", title = "",
        
        skewt.lines(dataframe$temp,  dataframe$press, col = col[1], lwd = lwd[1],lty = lty[1], ...)
        skewt.lines(dataframe$dewpt, dataframe$press, col = col[2], lwd = lwd[2],lty = lty[2],...)
+       skewt.lines(dataframe$rh/2, dataframe$press, col = col[3], lwd = lwd[2],lty = lty[2],...)
 
        #
        # Draw the windplot in the "space allocated"
        # top and bottom mar the same as skewt
        #
-        print( windplot)
+        #print( windplot)
         par(new = TRUE, pty = "m", plt = windplot, err = -1.)
         plotwind(dataframe = dataframe, size = s, legend = FALSE)
         par(plt = first.par$plt, mar = first.par$mar, new = FALSE, pty = first.par$
