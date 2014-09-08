@@ -54,15 +54,19 @@ extcol=function(file,col,row,tim){
   writeLines('u vector done')
   v1=slice(wind[[4]], i=col: col ,j=row:row,k=1:lev,l=tim:tim)
   writeLines('v vector done')
+  w1=slice(wind[[5]], i=col:col ,j=row:row,k=1:lev,l=tim:tim)
+  writeLines('w  done')
   ws1=slice(wind[[1]], i=col:col ,j=row:row,k=1:lev,l=tim:tim)
   writeLines('windspeed done')
   wd1=slice(wind[[2]], i=col:col ,j=row:row,k=1:lev,l=tim:tim)
   writeLines('wind dir.  done')
+  zp=slice(wind[[6]], i=col:col ,j=row:row,k=1:lev)
+  writeLines('zp  done')
   rm(wind)
   rh1=slice(relhum(nc), i=col:col ,j=row:row,k=1:lev,l=tim:tim)
   writeLines('rel. humid.  done')
-  column=list(pr1,tc1,td1,u1,v1,ws1,wd1,rh1)
-  #param=c("pr","tc","td","u","v","ws","wd","rh")
+  column=list(pr1,tc1,td1,u1,v1,ws1,wd1,rh1,zp,w)
+  #param=c("pr","tc","td","u","v","ws","wd","rh","zp")
   #names(column)=param
   
 }
@@ -75,26 +79,30 @@ plotARPScol <- function(file,col,row,tim,zoom=TRUE,winds=FALSE,viewtable=FALSE){
   column=extcol(file,col,row,tim)
 
 sounding<- melt(column[[1]], value.name = "press")
+zp      <- melt(column[[9]], value.name = "height")
 tc      <- melt(column[[2]], value.name = "temp")
 td      <- melt(column[[3]], value.name = "dewpt")
 rh      <- melt(column[[8]], value.name = "rh")
 u       <- melt(column[[4]], value.name = "uwind")
 v       <- melt(column[[5]], value.name = "vwind")
+w       <- melt(column[[10]], value.name = "wwind")
 ws      <- melt(column[[6]], value.name = "wspd")
 wd      <- melt(column[[7]], value.name = "dir")
 #column=list(pr1,tc1,td1,u1,v1,ws1,wd1,rh1)
 #rs[ "press"] <- pr_
+sounding[, "height"]  <- zp
 sounding[, "temp"]  <- tc
 sounding[, "dewpt"] <- td
 sounding[, "rh"]    <- rh
 sounding[, "uwind"] <- u
 sounding[, "vwind"] <- v
+sounding[, "wwind"] <- w
 sounding[, "wspd"]  <- ws
 sounding[, "dir"]   <- wd
 if (viewtable){
   View(sounding) 
-  write.table(sounding,file=paste0(col,row,tim,'txt'))
-  save(sounding,file=paste0(col,row,tim))
+  write.table(sounding,file=paste0(col,row,tim,'.txt'))
+  save(sounding,file=paste0(col,row,tim,'.RData'))
 }
 
 if(winds){

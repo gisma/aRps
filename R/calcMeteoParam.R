@@ -116,7 +116,11 @@ wind=function(nc){
   # get u wind vector (m/s)
   u <- get.var.ncdf( nc, "U")    
   # get V wind vector (m/s)
-  v <- get.var.ncdf( nc, "V")    
+  v <- get.var.ncdf( nc, "V") 
+  # get W wind vector (m/s)
+  w <- get.var.ncdf( nc, "W") 
+  # is no wind but also staggered;)
+  #zp <- get.var.ncdf( nc, "ZP")
   # do some pseudo unstaggering
   uxdim=dim(u)[1]
   uydim=dim(u)[2]
@@ -124,6 +128,8 @@ wind=function(nc){
   vydim=dim(v)[2]
   ldim=dim(u)[3]
   tdim=dim(u)[4]
+  w=slice (w, i=1:uxdim-1 ,j=1:uydim,k=1:ldim)
+  #zp=slice (zp, i=1:uxdim-1 ,j=1:uydim,k=1:ldim)
   u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
   v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
   # windspeed (m/s)
@@ -131,7 +137,7 @@ wind=function(nc){
   # winddirection in degree 
   wd<-180+atan2(u,v)*57.295
   # generate outputlist
-  wind=list(ws,wd,u,v)
+  wind=list(ws,wd,u,v,w)
   return(wind)
 }
 

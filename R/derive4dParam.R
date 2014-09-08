@@ -42,9 +42,9 @@ derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","w
   writeLines('wind dir.  done')
   rm(wind)
   # Air Temp in ° C
-  #tc = tcelsius(nc)
+  tc = tcelsius(nc)
   writeLines('temperature done')
-  var2nc(filename,'u',u,new=TRUE)
+  #var2nc(filename,'u',u,new=TRUE)
   
   # Computes the saturation vapour pressure over water at temperature t (K).
   if (any(param=="es")){
