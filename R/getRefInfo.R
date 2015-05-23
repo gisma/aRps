@@ -4,10 +4,9 @@
 
 #'@source 
 #'\tabular{ll}{
-#'Package: \tab aRps\cr
+#'Package: \tab peRfectpeak\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.2\cr
-#'Date: \tab \Sexpr[echo=TRUE]{paste0(getYear(Sys.Date()),"-",getMonth(Sys.Date()),"-",getDay(Sys.Date()))}\cr
+#'Version: \tab 0.1\cr
 #'License: \tab GPL (>= 2)\cr
 #'LazyLoad: \tab yes\cr
 #'}
@@ -74,9 +73,11 @@ getRefInfo=function(file){
   x_0=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#false_easting", finfo))],"=")[[1]][2])
   y_0=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#false_northing", finfo))],"=")[[1]][2])
   ## get correct extent from dimensions because it is not provided by gdalinfo
-  netcdf=open.ncdf(file)
-  x = length(get.var.ncdf(netcdf, "x"))
-  y = length(get.var.ncdf(netcdf, "y"))
+  netcdf=nc_open(file)
+  x=netcdf$dim$x$len
+  y=netcdf$dim$y$len
+  ##x = length(ncvar_get(netcdf, "X"))
+  ##y = length(ncvar_get(netcdf, "y"))
   ## check if projection is supported
   if (projname!="lambert_conformal_conic"){
     writeLines("Currently only 'lambert_conformal_conic' is supported")
@@ -86,14 +87,14 @@ getRefInfo=function(file){
     # has to be implemented
     xx=netcdf$dim$x$len
     yy=netcdf$dim$x$len
-    xmin=-5.94
+    xmin=5.94
     xmax=11.66
     ymin=47.94
     ymax=53.66
     if (xmax <0 || xmin <0){dx=round((abs(xmax)+abs(xmin))/xx,5)}
-    else{ dx=round((refInfo$ext[2]-refInfo$ext[1])/xx,5) }
-    if (ymin <0 || ymax <0){dy=round((abs(ymax)-abs(ymin))/yy,4)}
-    else{dy=round((ymax-ymin)/yy,4) }
+    else{ dx=round((xmax-xmin)/xx,5) }
+    if (ymin <0 || ymax <0){dy=round((abs(ymax)-abs(ymin))/yy,5)}
+    else{dy=round((ymax-ymin)/yy,5) }
     coordx<-seq(xmin,xmax, by = dx )
     coordy<-seq(ymin,ymax, by = dy )
     latlon=TRUE

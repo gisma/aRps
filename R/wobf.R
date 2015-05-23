@@ -1,5 +1,4 @@
-"wobf" <-
-function(temp)
+wobf <- function(temp)
 {
 #
 # Copyright 2001,2002 Tim Hoar
@@ -82,6 +81,7 @@ function(temp)
 	#                                  notes by t.w. schlatter
 	#                                  noaa/erl/profs program office
 	#                                  august 1981
+  temp=223
 	x <- temp - 20.
 	if(x <= 0.) {
 		pol <- 1. + x * (-0.0088416604999999992 + x * (

@@ -2,10 +2,9 @@
 \alias{getRefInfo}
 \title{Extract projection and extent from an ARPS netcdf file}
 \source{
-\tabular{ll}{ Package: \tab aRps\cr Type: \tab Package\cr
-Version: \tab 0.2\cr Date: \tab
-\Sexpr[echo=TRUE]{paste0(getYear(Sys.Date()),"-",getMonth(Sys.Date()),"-",getDay(Sys.Date()))}\cr
-License: \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr }
+\tabular{ll}{ Package: \tab peRfectpeak\cr Type: \tab
+Package\cr Version: \tab 0.1\cr License: \tab GPL (>= 2)\cr
+LazyLoad: \tab yes\cr }
 }
 \usage{
 getRefInfo(file)

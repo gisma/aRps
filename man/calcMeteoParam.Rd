@@ -3,9 +3,8 @@
 \title{calcMeteoParam calculates the meteorological parameters based on the ARPS-netCDF output file}
 \source{
 \tabular{ll}{ Package: \tab aRps\cr Type: \tab Package\cr
-Version: \tab 0.2\cr Date: \tab
-\Sexpr[echo=TRUE]{paste0(getYear(Sys.Date()),"-",getMonth(Sys.Date()),"-",getDay(Sys.Date()))}\cr
-License: \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr }
+Version: \tab 0.2\cr License: \tab GPL (>= 2)\cr LazyLoad:
+\tab yes\cr }
 }
 \usage{
 wnd<-wind(nc)

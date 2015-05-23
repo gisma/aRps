@@ -94,7 +94,6 @@
 #'Package: \tab aRps\cr
 #'Type: \tab Package\cr
 #'Version: \tab 0.2\cr
-#'Date: \tab \Sexpr[echo=TRUE]{paste0(getYear(Sys.Date()),"-",getMonth(Sys.Date()),"-",getDay(Sys.Date()))}\cr
 #'License: \tab GPL (>= 2)\cr
 #'LazyLoad: \tab yes\cr
 #'}
@@ -111,12 +110,16 @@
 #'  pr<-airpressure(nc) 
 
 
-wind=function(nc){  
+wind=function(nc,var){  
   # calculate windspeed (m/s) and winddirection (deg)
   # get u wind vector (m/s)
-  u <- get.var.ncdf( nc, "U")    
+  u <- ncvar_get ( nc, "U")    
   # get V wind vector (m/s)
-  v <- get.var.ncdf( nc, "V")    
+  v <- ncvar_get ( nc, "V") 
+  # get W wind vector (m/s)
+  w <- ncvar_get ( nc, "W") 
+  # is no wind but also staggered;)
+  zp <- ncvar_get ( nc, "ZP")
   # do some pseudo unstaggering
   uxdim=dim(u)[1]
   uydim=dim(u)[2]
@@ -124,25 +127,45 @@ wind=function(nc){
   vydim=dim(v)[2]
   ldim=dim(u)[3]
   tdim=dim(u)[4]
-  u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
-  v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
-  # windspeed (m/s)
-  ws<-sqrt(u^2+v^2)
-  # winddirection in degree 
-  wd<-180+atan2(u,v)*57.295
+
+
   # generate outputlist
-  wind=list(ws,wd,u,v)
-  return(wind)
+  #wind=list(ws,wd,u,v,w)
+  if (var == 'ws'){
+    u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
+    v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
+    # windspeed (m/s)
+    ws<-sqrt(u^2+v^2)
+    return(ws)
+  } else if (var == 'wd'){ 
+    u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
+    v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
+    # winddirection in degree 
+    wd<-180+atan2(u,v)*57.295
+    return(wd)
+  } else if (var == 'u'){
+    u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
+    return(u)
+  } else if (var == 'v'){
+    v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
+    return(v)
+  } else if (var == 'w'){
+    w=slice (w, i=1:uxdim-1 ,j=1:uydim,k=1:ldim)
+    return(w)
+  } else if (var == 'zp'){ 
+    u=slice (z, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
+    return(zp)
+}
 }
 
 exnerpress<- function(nc){
   # calculate Exner pressure (hPa)
-  (get.var.ncdf( nc, "P") / 100000.0) ^ (287.058 / 1005.0)
+  (ncvar_get ( nc, "P") / 100000.0) ^ (287.058 / 1005.0)
 }
 
 tcelsius=function(nc){
   # calculate air temperature Celsius using the exner pressure
-  exnerpress(nc) * get.var.ncdf( nc, "PT") -273.15
+  exnerpress(nc) * ncvar_get ( nc, "PT") -273.15
 }  
 
 satwatervapor<-function(nc){
@@ -167,7 +190,7 @@ partwatervapor<-function(nc){
   # Rw specifs constant water vapor  461.6
   # e = p/(Ra/Rw)*qv (Pa)
   # e = e/100 (hPa)
-  (get.var.ncdf( nc, "P")/0.622 * get.var.ncdf( nc, "QV"))/100
+  (ncvar_get ( nc, "P")/0.622 * ncvar_get ( nc, "QV"))/100
 }
 
 dewpoint<-function(nc){
@@ -188,7 +211,7 @@ dewpoint<-function(nc){
 }
 airpressure<-function(nc){
   # get and convert pressure from Pa to hPa
-  get.var.ncdf( nc, "P")/100
+  ncvar_get ( nc, "P")/100
 }
 relhum<-function(nc){
   # calculate relative air humidity

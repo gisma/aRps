@@ -3,9 +3,8 @@
 \title{Extract single ARPS columns and plots data as skew-T, log p diagram}
 \source{
 \tabular{ll}{ Package: \tab aRps\cr Type: \tab Package\cr
-Version: \tab 0.2\cr Date: \tab
-\Sexpr[echo=TRUE]{paste0(getYear(Sys.Date()),"-",getMonth(Sys.Date()),"-",getDay(Sys.Date()))}\cr
-License: \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr }
+Version: \tab 0.2\cr License: \tab GPL (>= 2)\cr LazyLoad:
+\tab yes\cr }
 }
 \usage{
 plotARPScol(filename,col, row, tim, zoom, winds=FALSE, viewtable=FALSE)
