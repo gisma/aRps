@@ -127,7 +127,6 @@ wind=function(nc,var){
   vydim=dim(v)[2]
   ldim=dim(u)[3]
   tdim=dim(u)[4]
-<<<<<<< HEAD
   
   
   # generate outputlist
@@ -135,15 +134,6 @@ wind=function(nc,var){
   if (var == 'ws'){
     #u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
     #v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
-=======
-
-
-  # generate outputlist
-  #wind=list(ws,wd,u,v,w)
-  if (var == 'ws'){
-    u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
-    v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
->>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
     # windspeed (m/s)
     ws<-sqrt(u^2+v^2)
     return(ws)
@@ -163,15 +153,9 @@ wind=function(nc,var){
     w=slice (w, i=1:uxdim-1 ,j=1:uydim,k=1:ldim)
     return(w)
   } else if (var == 'zp'){ 
-<<<<<<< HEAD
     #zp=slice (zp, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
     #return(zp)
   }
-=======
-    u=slice (z, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
-    return(zp)
-}
->>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
 }
 
 exnerpress<- function(nc){
