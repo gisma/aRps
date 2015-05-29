@@ -22,7 +22,6 @@
 #'Package: \tab aRps\cr
 #'Type: \tab Package\cr
 #'Version: \tab 0.2\cr
-#'Date: \tab \Sexpr[echo=TRUE]{paste0(getYear(Sys.Date()),"-",getMonth(Sys.Date()),"-",getDay(Sys.Date()))}\cr
 #'License: \tab GPL (>= 2)\cr
 #'LazyLoad: \tab yes\cr
 #'}
@@ -38,7 +37,7 @@
 #'@keywords keywords
 #'
 extcol=function(file,col,row,tim){
-  nc <- open.ncdf(file)
+  nc <- nc.open(file)
 
   lev=nc$dim$z$len
   pr1=slice(airpressure(nc), i=col:col ,j=row:row,k=1:lev,l=tim:tim)

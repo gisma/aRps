@@ -28,7 +28,7 @@ Depends:
     gdata,
     stats,
     methods,
-    ncdf,
+    ncdf4,
     ggplot2,
     reshape2,
     raster,

@@ -4,10 +4,9 @@
 
 #'@source 
 #'\tabular{ll}{
-#'Package: \tab aRps\cr
+#'Package: \tab peRfectpeak\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.2\cr
-#'Date: \tab \Sexpr[echo=TRUE]{paste0(getYear(Sys.Date()),"-",getMonth(Sys.Date()),"-",getDay(Sys.Date()))}\cr
+#'Version: \tab 0.1\cr
 #'License: \tab GPL (>= 2)\cr
 #'LazyLoad: \tab yes\cr
 #'}
@@ -61,7 +60,7 @@ getRefInfo=function(file){
   # this is neccessary due to the fact that ARPS writes a corrupt netCDF 3.0 format 
   # without extent and correct projection string  
   
-
+  
   finfo <- gdalinfo(file)
   ##extract parameters
   projname=strsplit(finfo[which(grepl("NC_GLOBAL#grid_mapping_name", finfo))],"=")[[1]][2]
@@ -74,28 +73,40 @@ getRefInfo=function(file){
   x_0=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#false_easting", finfo))],"=")[[1]][2])
   y_0=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#false_northing", finfo))],"=")[[1]][2])
   ## get correct extent from dimensions because it is not provided by gdalinfo
-  netcdf=open.ncdf(file)
-  x = length(get.var.ncdf(netcdf, "x"))
-  y = length(get.var.ncdf(netcdf, "y"))
+  netcdf=nc_open(file)
+  x=netcdf$dim$x$len
+  y=netcdf$dim$y$len
+  
+  
+  ##x = length(ncvar_get(netcdf, "X"))
+  ##y = length(ncvar_get(netcdf, "y"))
   ## check if projection is supported
-  if (projname!="lambert_conformal_conic"){
-    writeLines("Currently only 'lambert_conformal_conic' is supported")
-    writeLines("assuming geographic coordinates '+proj=longlat +datum=WGS84 +no_defs'")
-    writeLines('and going ahead...')
-    # take xmin ymin etc from ARPSoutput
-    # has to be implemented
-    xx=netcdf$dim$x$len
-    yy=netcdf$dim$x$len
-    xmin=5.94
-    xmax=11.66
-    ymin=47.94
-    ymax=53.66
-    if (xmax <0 || xmin <0){dx=round((abs(xmax)+abs(xmin))/xx,5)}
-    else{ dx=round((xmax-xmin)/xx,5) }
-    if (ymin <0 || ymax <0){dy=round((abs(ymax)-abs(ymin))/yy,5)}
-    else{dy=round((ymax-ymin)/yy,5) }
-    coordx<-seq(xmin,xmax, by = dx )
-    coordy<-seq(ymin,ymax, by = dy )
+  if (projname == "no_mapping"){
+    writeLines("'no mapping' means generic (wgs84) geo-coordinates")
+    writeLines("assigning '+proj=longlat +datum=WGS84 +no_defs'")
+
+    # coarse calculation of the  latitude (lat0) dependend grid resolution for lat and lon
+    # assuming WGS84 ellipsoid and the equatorian resolution for lat and lon in meter
+    rad.cof=3.1459/180
+    lat.1deg=110540
+    lon.1deg=111320*cos(rad.cof*lat0)
+    deltalat=1/lat.1deg*dy
+    deltalon=1/lon.1deg*dx
+    # derive min and max of the grid
+    xmin<-   lon0-trunc(netcdf$dim$x_stag$len/2)*deltalon
+    xmax<-   lon0+trunc(netcdf$dim$x_stag$len/2)*deltalon
+    ymin<-   lat0-trunc(netcdf$dim$y_stag$len/2)*deltalat
+    ymax<-   lat0+trunc(netcdf$dim$y_stag$len/2)*deltalat
+    
+    #if (xmax <0 || xmin <0){dx=round((abs(xmax)+abs(xmin))/xx,5)}
+    #else{ dx=round((xmax-xmin)/xx,5) }
+    #if (ymin <0 || ymax <0){dy=round((abs(ymax)-abs(ymin))/yy,5)}
+    #else{dy=round((ymax-ymin)/yy,5) }
+    
+    coordx<-seq(xmin,xmax, by = deltalon )
+    coordy<-seq(ymin,ymax, by = deltalat )
+    
+    # no mapping means latlon wgs84
     latlon=TRUE
     # always latlong geographic proj4 string
     proj="+proj=longlat +datum=WGS84 +no_defs" 
@@ -115,7 +126,22 @@ getRefInfo=function(file){
   }
   ## put coords in var
   ext=c(xmin,xmax,ymin,ymax)
+  
+  
+  # generate sequence of x,y coordinates based on the refInfos
+  # originial implmentation
+  #tmpx<-seq(refInfo$ext[1],refInfo$ext[2]- refInfo$dx, by = refInfo$dx )
+  #tmpy<-seq(refInfo$ext[3],refInfo$ext[4]- refInfo$dy, by = refInfo$dy )
+  # flexible for proj = 0
+  #tmpx<-seq(refInfo$ext[1],(max(orig.nc$dim$x$vals)-1)*refInfo$dx+refInfo$ext[1], by=refInfo$dx)
+  #tmpy<-seq(refInfo$ext[3],(max(orig.nc$dim$y$vals)-1)*refInfo$dy+refInfo$ext[3], by=refInfo$dy)
+  ### static for entenberg
+  ###tmpx<-seq(7.34+0.5*0.013518519,(max(orig.nc$dim$x$vals-1))*0.013518519+(7.34+0.5*0.013518519), by=0.013518519)
+  ###tmpy<-seq(49.83+0.5*0.01345679,(max(orig.nc$dim$y$vals-1))*0.01345679+(49.83+0.5*0.01345679), by=0.01345679)
+  
+  
+  
   ## generate return list
-  geoRefOut=list("proj"=proj,"ctrlat"=lat0,"ctrlon"=lon0, "dx"=dx, "dy"=dy,"ext"=ext)
+  geoRefOut=list("proj"=proj,"ctrlat"=lat0,"ctrlon"=lon0, "dx"=dx, "dy"=dy,"ext"=ext,"coordx"=coordx,"coordy"=coordy)
   return (geoRefOut)
 }
