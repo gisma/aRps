@@ -239,6 +239,7 @@ makenc3D<-function(file,varname){
   
   # reopen new netcdf file
   
+  
   new.nc<-nc_open(outfile3)
   writeLines("checked no. of  variables:")
   str(new.nc$nvars)
