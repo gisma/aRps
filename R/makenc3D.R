@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 #' @name makenc3D
 #' @aliases makenc3D
 
+=======
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
 #'@title Extract/calculate and georeferences meteo params from an ARPS netcdf file
 #'@description  The information of the projection is calculated using the informations as derived by the gdalinfo call of the ARPS netcdf file. Currently only "lambert_conformal_conic" and 'latlong' is supported.
 #'\code{\link{getRefInfo}} provides all missing projection values of an ARPS netCDF file
@@ -77,6 +80,7 @@ makenc3D<-function(file,varname){
   
   # define output variables
   writeLines("defining variables")
+<<<<<<< HEAD
   # we have to deal with different projections (not any longer)
   if (refInfo$proj=="+proj=longlat +datum=WGS84 +no_defs"){
     #define corresponding x,y,z,time dimensions of the output netcdf file
@@ -88,6 +92,25 @@ makenc3D<-function(file,varname){
     nc.z_stag <- ncdim_def( "level_stag", "m",orig.nc$var$ZP$dim[[3]][[9]],create_dimvar=TRUE)
   } else {
     #### !!!!! to be FIXED
+=======
+  # generate sequence of x,y coordinates based on the refInfos
+  # originial implmentation
+  #tmpx<-seq(refInfo$ext[1],refInfo$ext[2]- refInfo$dx, by = refInfo$dx )
+  #tmpy<-seq(refInfo$ext[3],refInfo$ext[4]- refInfo$dy, by = refInfo$dy )
+  # flexible for proj = 0
+  #tmpx<-seq(refInfo$ext[1],(max(orig.nc$dim$x$vals)-1)*refInfo$dx+refInfo$ext[1], by=refInfo$dx)
+  #tmpy<-seq(refInfo$ext[3],(max(orig.nc$dim$y$vals)-1)*refInfo$dy+refInfo$ext[3], by=refInfo$dy)
+  # static for entenberg
+  tmpx<-seq(7.34+0.5*0.013518519,(max(orig.nc$dim$x$vals-1))*0.013518519+(7.34+0.5*0.013518519), by=0.013518519)
+  tmpy<-seq(49.83+0.5*0.01345679,(max(orig.nc$dim$y$vals-1))*0.01345679+(49.83+0.5*0.01345679), by=0.01345679)
+  # we have to deal with different projections (not any longer)
+  if (refInfo$proj=="+proj=longlat +datum=WGS84 +no_defs"){
+    #define corresponding x,y,z,time dimensions of the output netcdf file
+    nc.x <- ncdim_def( "lon", "degrees_east", tmpx,create_dimvar=TRUE)
+    nc.y <- ncdim_def( "lat", "degrees_north", tmpy,create_dimvar=TRUE)
+    nc.z <- ncdim_def( "level", "level", orig.nc$dim$z$vals,create_dimvar=TRUE)
+  } else {
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
     #define corresponding x,y,z,time dimensions of the output netcdf file
     nc.x <- ncdim_def( "x", "meter", tmpx,create_dimvar=TRUE)
     nc.y <- ncdim_def( "y", "meter", tmpy,create_dimvar=TRUE)    
@@ -119,11 +142,19 @@ makenc3D<-function(file,varname){
   nc.t   <- ncdim_def("Time", orig.nc$dim$Time$units, ti,calendar='standard',create_dimvar=TRUE,unlim=TRUE)
   #nc.var <- var.def.ncdf(outvar.longname,outvar.units, list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   
+<<<<<<< HEAD
   var_ws <- ncvar_def('WS',longname='Wind Speed','m/s', list(nc.x_stag,nc.y_stag,nc.z,nc.t), 1.e30 )
   var_wd <- ncvar_def('WD',longname='Wind Direction','degrees_true', list(nc.x_stag,nc.y_stag,nc.z,nc.t), 1.e30 )
   .u  <- ncvar_def('UGRD',longname='U-velocity','m/s', list(nc.x_stag,nc.y,nc.z,nc.t), 1.e30 )
   .v  <- ncvar_def('VGRD',longname='V-velocity','m/s', list(nc.x,nc.y_stag,nc.z,nc.t), 1.e30 )
   .w  <- ncvar_def('WGRD',longname='W-velocity','m/s', list(nc.x,nc.y,nc.z_stag,nc.t), 1.e30 )
+=======
+  var_ws <- ncvar_def('WS',longname='Wind Speed','m/s', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  var_wd <- ncvar_def('WD',longname='Wind Direction','degrees_true', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  var_u  <- ncvar_def('UGRD',longname='U-velocity','m/s', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  var_v  <- ncvar_def('VGRD',longname='V-velocity','m/s', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  var_w  <- ncvar_def('WGRD',longname='W-velocity','m/s', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
   var_tc <- ncvar_def('TMP',longname='Air Temperature','Celsius', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   var_td <- ncvar_def('DPT',longname='Dewpoint Temperature','K', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   var_e  <- ncvar_def('PWV',longname='Partial Water Vapor','Pa', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
@@ -134,6 +165,7 @@ makenc3D<-function(file,varname){
   var_tke <- ncvar_def('TKE',longname='Turbulent Kinetic Energy','m2 s-2', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   var_qc <- ncvar_def('CLWMR',longname='Cloud water mixing ratio','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   var_qv <- ncvar_def('WVSMR',longname='Water vapor specific humidity','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+<<<<<<< HEAD
   var_qr <- ncvar_def('RWMR',longname='mass_fraction_of_rain_in_air','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   var_qi <- ncvar_def('CIMR',longname='Cloud Ice mixing ratio','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   var_qh <- ncvar_def('HMR',longname='mass_fraction_of_graupel_in_air','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
@@ -142,6 +174,16 @@ makenc3D<-function(file,varname){
   #var_rainc <- var.def.ncdf('Cumulus convective rain','mm', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   #var_raing <- var.def.ncdf( 'Grid supersaturation rain','mm', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
   .zp <- ncvar_def('ZP',longname='level','m', list(nc.x,nc.y,nc.z_stag), 1.e30 )
+=======
+  var_qr <- ncvar_def('RWMR',longname='Rain water mixing ratio','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  var_qi <- ncvar_def('CIMR',longname='Cloud Ice mixing ratio','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  var_qh <- ncvar_def('HMR',longname='Hail mixing ratio','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  var_qs <- ncvar_def('SMR',longname='Snow mixing ratio','kg/kg', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  
+  #var_rainc <- var.def.ncdf('Cumulus convective rain','mm', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  #var_raing <- var.def.ncdf( 'Grid supersaturation rain','mm', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+  var_zp <- ncvar_def('Height',longname='Altitude','meter', list(nc.x,nc.y,nc.z,nc.t), 1.e30 )
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
   
   
   varid_orig=list(var_kmv,var_tke,var_qc,var_qv,var_qr,var_qi,var_qh,var_qs)
@@ -154,6 +196,7 @@ makenc3D<-function(file,varname){
   # Create a netCDF file with this variable
   #ncnew <- nc_create( outfile,varIdAll,force_v4=FALSE)  
   
+<<<<<<< HEAD
   #ncnew <- nc_create( outfile1,varid_wind)
   ncnew <- nc_create( outfile1,list(.u,.v,.w,.zp))
   ncvar_put( ncnew, var_u, ncvar_get(orig.nc, 'U'))
@@ -162,6 +205,9 @@ makenc3D<-function(file,varname){
   ncvar_put( ncnew, var_zp, ncvar_get(orig.nc, 'ZP'))
   nc_close(ncnew)
   
+=======
+  ncnew <- nc_create( outfile1,varid_wind,force_v4=TRUE)
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
   
   # if vars should be cropped etc.
   #extract.var=ncvar_get(orig.nc, varname,start=c(1,1,1,1), count=c(nc.x$len,nc.y$len,nc.z$len,nc.t$len) )
@@ -177,7 +223,11 @@ makenc3D<-function(file,varname){
     # put data into empty output variable
     # if (dim3==TRUE){ncvar_add( ncnew, nc.var, extract.var, start=c(1,1,1), count=c(length(tmpx),length(tmpy),nc.z$len))}
     writeLines("zp") 
+<<<<<<< HEAD
     #ncvar_put( ncnew, var_w, wind(orig.nc,'zp') )
+=======
+    ncvar_put( ncnew, var_w, wind(orig.nc,'zp') )
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
     writeLines("wind speed") 
     ncvar_put( ncnew, var_ws,wind(orig.nc,'ws'))
     writeLines("wind direction") 
@@ -188,7 +238,11 @@ makenc3D<-function(file,varname){
     ncvar_put( ncnew, var_v, wind(orig.nc,'v') )
     writeLines("w") 
     ncvar_put( ncnew, var_w, wind(orig.nc,'w') )}
+<<<<<<< HEAD
   nc_close(ncnew)
+=======
+    nc_close(ncnew)
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
   new.nc<-nc_open(outfile1)
   writeLines("checked no. of  variables:")
   str(new.nc$nvars)
@@ -202,6 +256,7 @@ makenc3D<-function(file,varname){
   ncnew <- nc_create( outfile2,varid_tmp,force_v4=TRUE)
   new.nc<-nc_open(outfile2, write=TRUE)   
   writeLines("doing temperature calculations")
+<<<<<<< HEAD
   #if (varname=='tc'|varname=='allNew'){ncvar_add( ncnew, var_tc, tcelsius(orig.nc) )} 
   ncvar_put(ncnew, var_tc, tcelsius(orig.nc)) 
   ncvar_put( ncnew, var_td, dewpoint(orig.nc))
@@ -211,6 +266,17 @@ makenc3D<-function(file,varname){
   ncvar_put( ncnew, var_es, satwatervapor(orig.nc))
   ncvar_put( ncnew, var_p, airpressure(orig.nc))
   nc_close(ncnew)
+=======
+    #if (varname=='tc'|varname=='allNew'){ncvar_add( ncnew, var_tc, tcelsius(orig.nc) )} 
+    ncvar_put(ncnew, var_tc, tcelsius(orig.nc)) 
+    ncvar_put( ncnew, var_td, dewpoint(orig.nc))
+    writeLines("doing rh, e and es calculations")
+    ncvar_put( ncnew, var_rh, relhum(orig.nc))
+    ncvar_put( ncnew, var_e, partwatervapor(orig.nc))
+    ncvar_put( ncnew, var_es, satwatervapor(orig.nc))
+    ncvar_put( ncnew, var_p, airpressure(orig.nc))
+    nc_close(ncnew)
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
   # reopen new netcdf file
   new.nc<-nc_open(outfile2)
   writeLines("checked no. of  variables:")
@@ -235,10 +301,14 @@ makenc3D<-function(file,varname){
   ncvar_put( ncnew, var_qh, ncvar_get(orig.nc, 'QH'))
   ncvar_put( ncnew, var_qs, ncvar_get(orig.nc, 'QS'))
   nc_close(ncnew)
+<<<<<<< HEAD
   
   
   # reopen new netcdf file
   
+=======
+  # reopen new netcdf file
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
   new.nc<-nc_open(outfile3)
   writeLines("checked no. of  variables:")
   str(new.nc$nvars)
@@ -247,3 +317,7 @@ makenc3D<-function(file,varname){
   system(paste("ncks -A ",outfile1,outfile2))
   system(paste("ncks -A ",outfile2,outfile3))
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b

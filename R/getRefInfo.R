@@ -76,6 +76,7 @@ getRefInfo=function(file){
   netcdf=nc_open(file)
   x=netcdf$dim$x$len
   y=netcdf$dim$y$len
+<<<<<<< HEAD
   
   
   ##x = length(ncvar_get(netcdf, "X"))
@@ -107,6 +108,29 @@ getRefInfo=function(file){
     coordy<-seq(ymin,ymax, by = deltalat )
     
     # no mapping means latlon wgs84
+=======
+  ##x = length(ncvar_get(netcdf, "X"))
+  ##y = length(ncvar_get(netcdf, "y"))
+  ## check if projection is supported
+  if (projname!="lambert_conformal_conic"){
+    writeLines("Currently only 'lambert_conformal_conic' is supported")
+    writeLines("assuming geographic coordinates '+proj=longlat +datum=WGS84 +no_defs'")
+    writeLines('and going ahead...')
+    # take xmin ymin etc from ARPSoutput
+    # has to be implemented
+    xx=netcdf$dim$x$len
+    yy=netcdf$dim$x$len
+    xmin=5.94
+    xmax=11.66
+    ymin=47.94
+    ymax=53.66
+    if (xmax <0 || xmin <0){dx=round((abs(xmax)+abs(xmin))/xx,5)}
+    else{ dx=round((xmax-xmin)/xx,5) }
+    if (ymin <0 || ymax <0){dy=round((abs(ymax)-abs(ymin))/yy,5)}
+    else{dy=round((ymax-ymin)/yy,5) }
+    coordx<-seq(xmin,xmax, by = dx )
+    coordy<-seq(ymin,ymax, by = dy )
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
     latlon=TRUE
     # always latlong geographic proj4 string
     proj="+proj=longlat +datum=WGS84 +no_defs" 

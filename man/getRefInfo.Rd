@@ -4,6 +4,7 @@
 \alias{getRefInfo}
 \title{Extract projection and extent from an ARPS netcdf file}
 \source{
+<<<<<<< HEAD
 \tabular{ll}{
 Package: \tab peRfectpeak\cr
 Type: \tab Package\cr
@@ -11,6 +12,11 @@ Version: \tab 0.1\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
+=======
+\tabular{ll}{ Package: \tab peRfectpeak\cr Type: \tab
+Package\cr Version: \tab 0.1\cr License: \tab GPL (>= 2)\cr
+LazyLoad: \tab yes\cr }
+>>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
 }
 \usage{
 getRefInfo(file)
