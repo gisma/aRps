@@ -235,7 +235,7 @@ makenc3D<-function(file,varname){
   ncvar_put( ncnew, var_qh, ncvar_get(orig.nc, 'QH'))
   ncvar_put( ncnew, var_qs, ncvar_get(orig.nc, 'QS'))
   nc_close(ncnew)
-  
+   
   
   
   # reopen new netcdf file
