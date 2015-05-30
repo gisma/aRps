@@ -237,6 +237,7 @@ makenc3D<-function(file,varname){
   nc_close(ncnew)
   
   
+  
   # reopen new netcdf file
   
   
