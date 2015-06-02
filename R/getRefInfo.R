@@ -127,20 +127,6 @@ getRefInfo=function(file){
   ## put coords in var
   ext=c(xmin,xmax,ymin,ymax)
   
-  
-  # generate sequence of x,y coordinates based on the refInfos
-  # originial implmentation
-  #tmpx<-seq(refInfo$ext[1],refInfo$ext[2]- refInfo$dx, by = refInfo$dx )
-  #tmpy<-seq(refInfo$ext[3],refInfo$ext[4]- refInfo$dy, by = refInfo$dy )
-  # flexible for proj = 0
-  #tmpx<-seq(refInfo$ext[1],(max(orig.nc$dim$x$vals)-1)*refInfo$dx+refInfo$ext[1], by=refInfo$dx)
-  #tmpy<-seq(refInfo$ext[3],(max(orig.nc$dim$y$vals)-1)*refInfo$dy+refInfo$ext[3], by=refInfo$dy)
-  ### static for entenberg
-  ###tmpx<-seq(7.34+0.5*0.013518519,(max(orig.nc$dim$x$vals-1))*0.013518519+(7.34+0.5*0.013518519), by=0.013518519)
-  ###tmpy<-seq(49.83+0.5*0.01345679,(max(orig.nc$dim$y$vals-1))*0.01345679+(49.83+0.5*0.01345679), by=0.01345679)
-  
-  
-  
   ## generate return list
   geoRefOut=list("proj"=proj,"ctrlat"=lat0,"ctrlon"=lon0, "dx"=dx, "dy"=dy,"ext"=ext,"coordx"=coordx,"coordy"=coordy)
   return (geoRefOut)
