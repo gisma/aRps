@@ -5,7 +5,6 @@
 \alias{wind}
 \title{calcMeteoParam calculates the meteorological parameters based on the ARPS-netCDF output file}
 \source{
-<<<<<<< HEAD
 \tabular{ll}{
 Package: \tab aRps\cr
 Type: \tab Package\cr
@@ -13,11 +12,6 @@ Version: \tab 0.2\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
-=======
-\tabular{ll}{ Package: \tab aRps\cr Type: \tab Package\cr
-Version: \tab 0.2\cr License: \tab GPL (>= 2)\cr LazyLoad:
-\tab yes\cr }
->>>>>>> 587445933251a6d77ef860b5b8fe5d363fbd4f2b
 }
 \usage{
 wnd<-wind(nc)
