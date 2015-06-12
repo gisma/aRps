@@ -17,7 +17,7 @@
 
 
 #'@usage refARPSnc(file,param)
-#'@author Chris Reudenbach and Hanna MeyerQ
+#'@author Chris Reudenbach and Hanna Meyer
 #'@references \url{http://giswerk.org/doku.php?id=doku:modeling:arps:arps_installation}
 #'@seealso For retrieving and writing projected data see\code{\link{derive4dParam}}. 
 #' 
@@ -32,7 +32,7 @@
 #'@examples   
 #'  #### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
 #'       
-#' arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
+#' arpsexample=system.file("kili.nc", package="aRps")
 #' refARPSnc(arpsexample,'allNew')
 
 
@@ -251,22 +251,6 @@ refARPSnc<-function(file,varname){
   test$nvars
   writeLines("successfully")
   
-##  ncid_old <- nc_open( outfile1 , write=TRUE )
-##  #xdim <- ncid_old$dim[['lon']]
-##  #ydim <- ncid_old$dim[['lat']]
-##  #tdim <- ncid_old$dim[['Time']]
-##  #zdim <- ncdim_def( "level_stag", "m", orig.nc$var$ZP$dim[[3]][[9]],create_dimvar=TRUE)
-##  ncid_old <- ncvar_add( ncid_old, .w )  # NOTE this returns a modified netcdf file handle 
-##  ncvar_put( ncid_old, .w, ncvar_get(orig.nc, 'W'))
-##  nc_close(ncid_old)
-## if vars should be cropped etc.
-## extract.var=ncvar_get(orig.nc, varname,start=c(1,1,1,1), count=c(nc.x$len,nc.y$len,nc.z$len,nc.t$len) )
-
-
-  ##reopen new netcdf file
-  ##new.nc<-nc_open(outfile3)
-  ##writeLines("checked no. of  variables:")
-  ##str(new.nc$nvars)
   ##writeLines(paste(outfile3,'with', new.nc$nvars,' vars successfully created...'))
   ##writeLines("concatenating all files... using ncks") 
   ##system(paste("ncks -A ",outfile1,outfile2))

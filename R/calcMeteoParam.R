@@ -1,6 +1,6 @@
 #' @name calcMeteoParam
 #' @aliases calcMeteoParam
-#' @title calcMeteoParam calculates the meteorological parameters based on the ARPS-netCDF output file
+#' @title calcMeteoParam calculates unstaggered meteorological parameters based on the ARPS-netCDF output file
 #' @description
 #'  calcMeteoParam converts, and derives meterorlogical parameters from the ARPS netCDF  modelrun result file.
 #'    \itemize{
@@ -11,10 +11,6 @@
 #'      \item water vapor saturation pressure (hPa)
 #'      \item water vapor pressure (hPa)
 #'      \item relative air humidity (%)
-#'      \item u component of the horizontal windvector (m/s)
-#'      \item v component of the horizontal windvector (m/s) 
-#'      \item windspeed (m/s) 
-#'      \item wind direction (deg)
 #'      }
 #' @details
 #' The following equations are used:\cr
@@ -61,102 +57,42 @@
 #'                 \tab \eqn{e} \tab \eqn{= water vapor pressure (hPa)}\cr
 #'                 \tab \eqn{es} \tab \eqn{= water vapor saturation pressure (hPa)}\cr
 #'        }
-#'        \item wind speed (m/s): \eqn{ ws=sqrt(u^2+v^2)}
-#'        \tabular{lll}{ 
-#'                 \tab \eqn{u} \tab \eqn{= zonal velocity of horizontal wind  (m/s)}\cr
-#'                 \tab \eqn{v} \tab \eqn{= meridional velocity of horizontal wind (m/s)}\cr
-#'        }  
-#'        \item wind direction (m/s): \eqn{wd=180+atan2(u,v)*57.295}
-#'        \tabular{lll}{ 
-#'                 \tab \eqn{u} \tab \eqn{= zonal velocity of horizontal wind  (m/s)}\cr
-#'                 \tab \eqn{v} \tab \eqn{= meridional velocity of horizontal wind (m/s)}\cr
-#'                 \tab \eqn{atan2} \tab   the use of atan2 avoids the quadrant search for calculating the correct angle\cr
-#'      }
 #'      \item For all operations is valid:
 #'        \tabular{lll}{ 
 #'                 \tab \eqn{pt} \tab \eqn{= potential temperature (K)}\cr
 #'                 \tab \eqn{p} \tab {= air pressure (Pa)}\cr
 #'                 \tab \eqn{qv} \tab   {= water vapor mixing ratio (g/kg)}\cr
-#'                 \tab \eqn{u,v} \tab   {the horizontal windvector components (m/s) are directly derived from the model inputfile}\cr
-#'      }}
-#'@usage wnd<-wind(nc)
+#' #'      }}
+#'@usage exner<-exnerpress(nc)
 
 #'@param function name
-#'@param nc netcdf object as opened by: nc <- open.ncdf(arpsexample)
+#'@param nc netcdf object as opened by: nc <- nc_open(arps.ncfile)
 #'@return  
-#'The function wind returns a list of the the unstaggered wind components (u,v,ws,wd).
-#'the other function are returning the requested type of calculated data 
-#' Be careful this data Arrays can be VERY big. 
+#'The function exnerpress returns the Exner pressure (hPa).
+#' The other functions will convert and return the requested data 
+#' Be careful the data arrays may be VERY big. 
 #'
-#'@author  Hanna Meyer, Chris Reudenbach
+#'@author  Chris Reudenbach, Hanna Meyer
 #'@source 
 #'\tabular{ll}{
 #'Package: \tab aRps\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.2\cr
+#'Version: \tab 0.3\cr
 #'License: \tab GPL (>= 2)\cr
 #'LazyLoad: \tab yes\cr
 #'}
-#'@seealso If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
-
+#'@seealso If you want to use this data georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
+#'@export calcMeteoParam
 #'@examples
 #'  #### Examples how  to use the function in calcMeteoParam:
 #'  ###  (1) provide a valid netcdf file
 #'  ##   (2) open it
 #'  #    (3) use it (i.e. air pressure)
 
-#'  arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
-#'  nc <- open.ncdf(arpsexample)
+#'  arps.ncfile=system.file("kili.nc", package="aRps")
+#'  nc <- nc_open(arps.ncfile)
 #'  pr<-airpressure(nc) 
 
-
-wind=function(nc,var){  
-  # calculate windspeed (m/s) and winddirection (deg)
-  # get u wind vector (m/s)
-  u <- ncvar_get ( nc, "U")    
-  # get V wind vector (m/s)
-  v <- ncvar_get ( nc, "V") 
-  # get W wind vector (m/s)
-  w <- ncvar_get ( nc, "W") 
-  # is no wind but also staggered;)
-  zp <- ncvar_get ( nc, "ZP")
-  # do some pseudo unstaggering
-  uxdim=dim(u)[1]
-  uydim=dim(u)[2]
-  vxdim=dim(v)[1]
-  vydim=dim(v)[2]
-  ldim=dim(u)[3]
-  tdim=dim(u)[4]
-  
-  
-  # generate outputlist
-  #wind=list(ws,wd,u,v,w)
-  if (var == 'ws'){
-    #u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
-    #v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
-    # windspeed (m/s)
-    ws<-sqrt(u^2+v^2)
-    return(ws)
-  } else if (var == 'wd'){ 
-    u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
-    v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
-    # winddirection in degree 
-    wd<-180+atan2(u,v)*57.295
-    return(wd)
-  } else if (var == 'u'){
-    u=slice (u, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
-    return(u)
-  } else if (var == 'v'){
-    v=slice (v, i=1:vxdim ,j=1:vydim-1,k=1:ldim,l=1:tdim)
-    return(v)
-  } else if (var == 'w'){
-    w=slice (w, i=1:uxdim-1 ,j=1:uydim,k=1:ldim)
-    return(w)
-  } else if (var == 'zp'){ 
-    #zp=slice (zp, i=1:uxdim-1 ,j=1:uydim,k=1:ldim,l=1:tdim)
-    #return(zp)
-  }
-}
 
 exnerpress<- function(nc){
   # calculate Exner pressure (hPa)

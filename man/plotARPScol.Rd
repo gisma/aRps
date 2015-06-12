@@ -42,10 +42,10 @@ data column is converted to a data.frame as used bei the plotradiosonde function
 \examples{
 ###############
  # get data
- arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
- plotARPScol(arpsexample,10,10,2)
+ arps.ncfile=system.file("kili.nc", package="aRps")
+ plotARPScol(arps.ncfile,10,10,2)
  #plots skew-T, log p diagram derived at array (domain) position 10, 10 at timepos 2 and shows data table
- plotARPScol(arpsexample,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE)
+ plotARPScol(arps.ncfile,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE)
 }
 \author{
 Hanna Meyer, Chris Reudenbach

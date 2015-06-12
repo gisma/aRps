@@ -33,8 +33,8 @@
 #'@examples   
 #'  #### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
 #'       
-#' arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
-#' makenc3D(arpsexample,'allNew')
+#' arps.ncfile=system.file("kili.nc", package="aRps")
+#' makenc3D(arps.ncfile,'allNew')
 
 
 
@@ -73,7 +73,7 @@ makenc3D<-function(file,varname){
   # get projection and extent of input netCDF file
   refInfo=getRefInfo(infile)
   # open input netcdf file
-  orig.nc <- nc_open(infile)
+  orig.nc <- nc.open(infile)
   
   # define output variables
   writeLines("defining variables")

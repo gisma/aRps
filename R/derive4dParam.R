@@ -1,4 +1,4 @@
-derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","ws","wd")){
+derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr")){
   #
   # Copyright 2013 Hanna Meyer, and Chris Reudenbach
   #
@@ -27,20 +27,10 @@ derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","w
   
   #filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
   #filename= '/home/creu/Daten/ARPS/marburg_d1.nc'
-  nc <- open.ncdf( filename )
+  nc <- nc.open( filename )
   # get pressure (Pa)
   #p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1) )
   
-  wind=wind(nc)
-  u=wind[[3]]
-  writeLines('u vector done')
-  v=wind[[4]]
-  writeLines('v vector done')
-  ws=wind[[1]]
-  writeLines('windspeed done')
-  wd=wind[[2]]
-  writeLines('wind dir.  done')
-  rm(wind)
   # Air Temp in ° C
   tc = tcelsius(nc)
   writeLines('temperature done')

@@ -28,11 +28,11 @@
 #'@seealso seealso
 #'@examples ###############
 #'  # get data
-#'  arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
+#'  arps.ncfile=system.file("kili.nc", package="aRps")
 #   default usage: plots skew-T, log p diagram array (domain) position 10, 10 at timepos 2
-#'  plotARPScol(arpsexample,10,10,2)
+#'  plotARPScol(arps.ncfile,10,10,2)
 #'  #plots skew-T, log p diagram derived at array (domain) position 10, 10 at timepos 2 and shows data table
-#'  plotARPScol(arpsexample,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE) 
+#'  plotARPScol(arps.ncfile,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE) 
 #'@export  
 #'@keywords keywords
 #'
@@ -72,7 +72,7 @@ extcol=function(file,col,row,tim){
 
 plotARPScol <- function(file,col,row,tim,zoom=TRUE,winds=FALSE,viewtable=FALSE){
 
-  # arpsexample = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
+  # arps.ncfile = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
   # filename= '/home/creu/Daten/ARPS/marburg_d1.nc'
 
   column=extcol(file,col,row,tim)

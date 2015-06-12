@@ -33,11 +33,11 @@ The information of the projection is calculated using the informations as derive
 \examples{
 #### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
 
-arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
+arpsexample=system.file("kili.nc", package="aRps")
 refARPSnc(arpsexample,'allNew')
 }
 \author{
-Chris Reudenbach and Hanna MeyerQ
+Chris Reudenbach and Hanna Meyer
 }
 \references{
 \url{http://giswerk.org/doku.php?id=doku:modeling:arps:arps_installation}

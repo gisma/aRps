@@ -35,8 +35,8 @@
 #'  #### Example to extract the projection and 
 #'  #### calculate the extent coordinates from a ARPS nccdf file
 #'       
-#' arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
-#' refInfo=getRefInfo(arpsexample)
+#' arps.ncfile=system.file("kili.nc", package="aRps")
+#' refInfo=getRefInfo(arps.ncfile)
 #' refInfo
 
 getRefInfo=function(file){
@@ -92,19 +92,17 @@ getRefInfo=function(file){
     lon.1deg=111320*cos(rad.cof*lat0)
     deltalat=1/lat.1deg*dy
     deltalon=1/lon.1deg*dx
+    
     # derive min and max of the grid
     xmin<-   lon0-trunc(netcdf$dim$x_stag$len/2)*deltalon
     xmax<-   lon0+trunc(netcdf$dim$x_stag$len/2)*deltalon
     ymin<-   lat0-trunc(netcdf$dim$y_stag$len/2)*deltalat
     ymax<-   lat0+trunc(netcdf$dim$y_stag$len/2)*deltalat
     
-    #if (xmax <0 || xmin <0){dx=round((abs(xmax)+abs(xmin))/xx,5)}
-    #else{ dx=round((xmax-xmin)/xx,5) }
-    #if (ymin <0 || ymax <0){dy=round((abs(ymax)-abs(ymin))/yy,5)}
-    #else{dy=round((ymax-ymin)/yy,5) }
-    
+    # calculate lat and lon coordinates  
     coordx<-seq(xmin,xmax, by = deltalon )
     coordy<-seq(ymin,ymax, by = deltalat )
+    
     
     # no mapping means latlon wgs84
     latlon=TRUE
@@ -123,8 +121,14 @@ getRefInfo=function(file){
     xmax=as.integer(tr[1,1]+(x/2*dx-dx))
     ymin=as.integer(tr[1,2]-(y/2*dy-dy))
     ymax=as.integer(tr[1,2]+(y/2*dy-dy))
-  }
-  ## put coords in var
+    coordx<-seq(xmin,xmax, by = dx )
+    coordy<-seq(ymin,ymax, by = dy )  
+      }
+
+  
+
+
+    ## put coords in var
   ext=c(xmin,xmax,ymin,ymax)
   
   ## generate return list

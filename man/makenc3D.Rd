@@ -33,8 +33,8 @@ The information of the projection is calculated using the informations as derive
 \examples{
 #### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
 
-arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
-makenc3D(arpsexample,'allNew')
+arps.ncfile=system.file("kili.nc", package="aRps")
+makenc3D(arps.ncfile,'allNew')
 }
 \author{
 Chris Reudenbach and Hanna MeyerQ

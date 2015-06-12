@@ -2,29 +2,29 @@
 % Please edit documentation in R/calcMeteoParam.R
 \name{calcMeteoParam}
 \alias{calcMeteoParam}
-\alias{wind}
-\title{calcMeteoParam calculates the meteorological parameters based on the ARPS-netCDF output file}
+\alias{exnerpress}
+\title{calcMeteoParam calculates unstaggered meteorological parameters based on the ARPS-netCDF output file}
 \source{
 \tabular{ll}{
 Package: \tab aRps\cr
 Type: \tab Package\cr
-Version: \tab 0.2\cr
+Version: \tab 0.3\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
 }
 \usage{
-wnd<-wind(nc)
+exner<-exnerpress(nc)
 }
 \arguments{
-\item{nc}{netcdf object as opened by: nc <- open.ncdf(arpsexample)}
+\item{nc}{netcdf object as opened by: nc <- nc_open(arps.ncfile)}
 
 \item{function}{name}
 }
 \value{
-The function wind returns a list of the the unstaggered wind components (u,v,ws,wd).
-the other function are returning the requested type of calculated data
-Be careful this data Arrays can be VERY big.
+The function exnerpress returns the Exner pressure (hPa).
+The other functions will convert and return the requested data
+Be careful the data arrays may be VERY big.
 }
 \description{
 calcMeteoParam converts, and derives meterorlogical parameters from the ARPS netCDF  modelrun result file.
@@ -36,10 +36,6 @@ calcMeteoParam converts, and derives meterorlogical parameters from the ARPS net
      \item water vapor saturation pressure (hPa)
      \item water vapor pressure (hPa)
      \item relative air humidity (%)
-     \item u component of the horizontal windvector (m/s)
-     \item v component of the horizontal windvector (m/s)
-     \item windspeed (m/s)
-     \item wind direction (deg)
      }
 }
 \details{
@@ -87,38 +83,26 @@ The following equations are used:\cr
                 \tab \eqn{e} \tab \eqn{= water vapor pressure (hPa)}\cr
                 \tab \eqn{es} \tab \eqn{= water vapor saturation pressure (hPa)}\cr
        }
-       \item wind speed (m/s): \eqn{ ws=sqrt(u^2+v^2)}
-       \tabular{lll}{
-                \tab \eqn{u} \tab \eqn{= zonal velocity of horizontal wind  (m/s)}\cr
-                \tab \eqn{v} \tab \eqn{= meridional velocity of horizontal wind (m/s)}\cr
-       }
-       \item wind direction (m/s): \eqn{wd=180+atan2(u,v)*57.295}
-       \tabular{lll}{
-                \tab \eqn{u} \tab \eqn{= zonal velocity of horizontal wind  (m/s)}\cr
-                \tab \eqn{v} \tab \eqn{= meridional velocity of horizontal wind (m/s)}\cr
-                \tab \eqn{atan2} \tab   the use of atan2 avoids the quadrant search for calculating the correct angle\cr
-     }
      \item For all operations is valid:
        \tabular{lll}{
                 \tab \eqn{pt} \tab \eqn{= potential temperature (K)}\cr
                 \tab \eqn{p} \tab {= air pressure (Pa)}\cr
                 \tab \eqn{qv} \tab   {= water vapor mixing ratio (g/kg)}\cr
-                \tab \eqn{u,v} \tab   {the horizontal windvector components (m/s) are directly derived from the model inputfile}\cr
-     }}
+#'      }}
 }
 \examples{
 #### Examples how  to use the function in calcMeteoParam:
  ###  (1) provide a valid netcdf file
  ##   (2) open it
  #    (3) use it (i.e. air pressure)
- arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
- nc <- open.ncdf(arpsexample)
+ arps.ncfile=system.file("kili.nc", package="aRps")
+ nc <- nc_open(arps.ncfile)
  pr<-airpressure(nc)
 }
 \author{
-Hanna Meyer, Chris Reudenbach
+Chris Reudenbach, Hanna Meyer
 }
 \seealso{
-If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
+If you want to use this data georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
 }
 

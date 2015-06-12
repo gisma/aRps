@@ -37,8 +37,8 @@ The information of the projection is calculated using the informations as derive
 #### Example to extract the projection and
  #### calculate the extent coordinates from a ARPS nccdf file
 
-arpsexample=system.file("allgaeu_d1_ARP.nc", package="aRps")
-refInfo=getRefInfo(arpsexample)
+arps.ncfile=system.file("kili.nc", package="aRps")
+refInfo=getRefInfo(arps.ncfile)
 refInfo
 }
 \author{
