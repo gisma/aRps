@@ -1,12 +1,12 @@
-#'@title Extract projection and extent from an ARPS netcdf file
-#'@description  The information of the projection is calculated using the informations as derived by the gdalinfo call of the ARPS netcdf file. Currently only "lambert_conformal_conic" is supported.
-#'\code{\link{getRefInfo}} provides all missing projection values of an ARPS netCDF file
+#'@title Calculate projection and extent from an ARPS netcdf file
+#'@description  The information of the projection is calculated using by analysing the ARPS netcdf file parameters. Currently only "no_mapping" (default) and "lambert_conformal_conic" (north hemisphere) is supported.
+#'\code{\link{getRefInfo}} provides the missing projection values of an ARPS netCDF file
 
 #'@source 
 #'\tabular{ll}{
 #'Package: \tab peRfectpeak\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.1\cr
+#'Version: \tab 0.2\cr
 #'License: \tab GPL (>= 2)\cr
 #'LazyLoad: \tab yes\cr
 #'}
@@ -16,8 +16,9 @@
 
 #'@usage getRefInfo(file)
 #'@author Chris Reudenbach and Hanna Meyer
-#'@references \url{http://giswerk.org/doku.php?id=doku:modeling:arps:arps_installation}
-#'@seealso For retrieving and writing projected data see\code{\link{derive4dParam}}. 
+#'@references \url{http://giswerk.org/doku.php?id=wac:modeling:arps:intro}
+#'@seealso For retrieving variables see\code{\link{derive4dParam}}. 
+#'@seealso For calculate thermodynamic variables see\code{\link{calcMeteoParam}}. 
 #' 
 #'@param file  is a filname of an ARPS netcdf file
 #'
@@ -29,7 +30,10 @@
 #'$dx \tab grid spacing in x direction\cr
 #'$dy \tab grid spacing in y direction\cr
 #'$ext \tab xmin,xmax,ymin,ymax in $proj\cr
+#'$coordx \tab list of x coordinates according to the domain $xcoord\cr
+#'$coordy \tab list of y coordinates according to the domain $ycoord\cr
 #'}  
+
 #'@export getRefInfo
 #'@examples   
 #'  #### Example to extract the projection and 
@@ -57,12 +61,13 @@ getRefInfo=function(file){
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   #
   # getRefInfo identifies the projection and extent of an arps model run netCDF outputfile
-  # this is neccessary due to the fact that ARPS writes a corrupt netCDF 3.0 format 
-  # without extent and correct projection string  
-  
-  
+  # this is neccessary due to the fact that ARPS writes a non standard netCDF 3.0 format 
+  # without correct projection and extent
+
+  # using gdalinfo to derive the necessary parameters
   finfo <- gdalinfo(file)
-  ##extract parameters
+  
+  # extract parameters
   projname=strsplit(finfo[which(grepl("NC_GLOBAL#grid_mapping_name", finfo))],"=")[[1]][2]
   lat_1=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#TRUELAT1", finfo))],"=")[[1]][2])
   lat_2=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#TRUELAT2", finfo))],"=")[[1]][2])
@@ -72,24 +77,26 @@ getRefInfo=function(file){
   dy=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#DY", finfo))],"=")[[1]][2])
   x_0=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#false_easting", finfo))],"=")[[1]][2])
   y_0=as.numeric(strsplit(finfo[which(grepl("NC_GLOBAL#false_northing", finfo))],"=")[[1]][2])
-  ## get correct extent from dimensions because it is not provided by gdalinfo
+  
+  ## get correct extent from netcdf file dimensions 
+  ## because it is not provided by gdalinfo )
+  ## **FIXME** we could get all data from the netcdf file
   netcdf=nc_open(file)
   x=netcdf$dim$x$len
   y=netcdf$dim$y$len
-  
-  
-  ##x = length(ncvar_get(netcdf, "X"))
-  ##y = length(ncvar_get(netcdf, "y"))
+
   ## check if projection is supported
   if (projname == "no_mapping"){
     writeLines("'no mapping' means generic (wgs84) geo-coordinates")
-    writeLines("assigning '+proj=longlat +datum=WGS84 +no_defs'")
+    writeLines("assign '+proj=longlat +datum=WGS84 +no_defs'")
 
-    # coarse calculation of the  latitude (lat0) dependend grid resolution for lat and lon
-    # assuming WGS84 ellipsoid and the equatorian resolution for lat and lon in meter
+    # approximative calculation of the latitude (lat0) dependend grid resolution for lat and lon
+    # ARPS uses the WGS84 ellipsoid
+    # so we take the WGS84 resolution for lat and lon in meter at the equator
     rad.cof=3.1459/180
     lat.1deg=110540
     lon.1deg=111320*cos(rad.cof*lat0)
+    # calculate stepsize
     deltalat=1/lat.1deg*dy
     deltalon=1/lon.1deg*dx
     
@@ -103,12 +110,13 @@ getRefInfo=function(file){
     coordx<-seq(xmin,xmax, by = deltalon )
     coordy<-seq(ymin,ymax, by = deltalat )
     
-    
     # no mapping means latlon wgs84
     latlon=TRUE
-    # always latlong geographic proj4 string
+
+    # define latlong proj4 string
     proj="+proj=longlat +datum=WGS84 +no_defs" 
   } 
+  ## ***FIXME*** LCC did not work properly in ARPS
   if(projname=="lambert_conformal_conic"){
     ## generate compliant prj4 string
     proj=paste("+proj=lcc +lat_1=",lat_1," +lat_2=",lat_2,
@@ -125,10 +133,7 @@ getRefInfo=function(file){
     coordy<-seq(ymin,ymax, by = dy )  
       }
 
-  
-
-
-    ## put coords in var
+  ## put coords in ext for export
   ext=c(xmin,xmax,ymin,ymax)
   
   ## generate return list

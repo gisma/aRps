@@ -15,6 +15,7 @@
 #'      \item relative air humidity (%)
 #'      \item u component of the horizontal windvector (m/s)
 #'      \item v component of the horizontal windvector (m/s) 
+#'      \item w component of the horizontal windvector (m/s)       
 #'      \item windspeed (m/s) 
 #'      \item wind direction (deg)
 #'      }
@@ -90,17 +91,18 @@
 #'the other function are returning the requested type of calculated data 
 #' Be careful this data Arrays can be VERY big. 
 #'
-#'@author  Hanna Meyer, Chris Reudenbach
+#'@author  Chris Reudenbach and Hanna Meyer,
 
 #'@seealso If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
 
-#'@export airpressure wind exnerpress satwatervapor partwatervapor
+#'@export alt airpressure wind exnerpress satwatervapor partwatervapor tcelsius relhum dewpoint
 
 #'@examples
 #'  #### Examples how  to use the function in calcMeteoParam:
 #'  ###  (1) provide a valid netcdf file
 #'  ##   (2) open it
 #'  #    (3) use it (i.e. air pressure)
+
 
 #'  arpsexample=system.file("kili.nc", package="aRps")
 #'  nc <- nc_open(arpsexample)
@@ -113,6 +115,7 @@ alt=function(nc){
   x.dim= nc$dim$x$len
   y.dim= nc$dim$y$len
   z.stag.dim= nc$dim$z_stag$len
+
   # destagger the values
   # means calculate the average for the grid from the neighbouring grid-borders
   zp=   0.5*(zp[,,1:(as.numeric(z.stag.dim)-1)]+zp[,,2:(z.stag.dim)])
@@ -127,7 +130,6 @@ wind=function(nc,var){
   # get W wind vector (m/s)
   w <- ncvar_get ( nc, "W") 
 
-  
   # get dimensions
   x.dim= nc$dim$x$len
   y.dim= nc$dim$y$len
@@ -159,7 +161,7 @@ exnerpress<- function(nc){
   (ncvar_get ( nc, "P") / 100000.0) ^ (287.058 / 1005.0)
 }
 
-tcelsius=function(nc){
+tcelsius =function(nc){
   # calculate air temperature Celsius using the exner pressure
   exnerpress(nc) * ncvar_get ( nc, "PT") -273.15
 }  
@@ -209,7 +211,7 @@ airpressure<-function(nc){
   # get and convert pressure from Pa to hPa
   ncvar_get ( nc, "P")/100
 }
-relhum<-function(nc){
+relhum <-function(nc){
   # calculate relative air humidity
   (partwatervapor(nc)/satwatervapor(nc))*100 
 }

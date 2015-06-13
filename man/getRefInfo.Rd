@@ -2,12 +2,12 @@
 % Please edit documentation in R/getRefInfo.R
 \name{getRefInfo}
 \alias{getRefInfo}
-\title{Extract projection and extent from an ARPS netcdf file}
+\title{Calculate projection and extent from an ARPS netcdf file}
 \source{
 \tabular{ll}{
 Package: \tab peRfectpeak\cr
 Type: \tab Package\cr
-Version: \tab 0.1\cr
+Version: \tab 0.2\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
@@ -27,11 +27,13 @@ $lon \tab central longitude of the data domain\cr
 $dx \tab grid spacing in x direction\cr
 $dy \tab grid spacing in y direction\cr
 $ext \tab xmin,xmax,ymin,ymax in $proj\cr
+$coordx \tab list of x coordinates according to the domain $xcoord\cr
+$coordy \tab list of y coordinates according to the domain $ycoord\cr
 }
 }
 \description{
-The information of the projection is calculated using the informations as derived by the gdalinfo call of the ARPS netcdf file. Currently only "lambert_conformal_conic" is supported.
-\code{\link{getRefInfo}} provides all missing projection values of an ARPS netCDF file
+The information of the projection is calculated using by analysing the ARPS netcdf file parameters. Currently only "no_mapping" (default) and "lambert_conformal_conic" (north hemisphere) is supported.
+\code{\link{getRefInfo}} provides the missing projection values of an ARPS netCDF file
 }
 \examples{
 #### Example to extract the projection and
@@ -45,9 +47,11 @@ refInfo
 Chris Reudenbach and Hanna Meyer
 }
 \references{
-\url{http://giswerk.org/doku.php?id=doku:modeling:arps:arps_installation}
+\url{http://giswerk.org/doku.php?id=wac:modeling:arps:intro}
 }
 \seealso{
-For retrieving and writing projected data see\code{\link{derive4dParam}}.
+For retrieving variables see\code{\link{derive4dParam}}.
+
+For calculate thermodynamic variables see\code{\link{calcMeteoParam}}.
 }
 

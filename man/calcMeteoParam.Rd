@@ -29,6 +29,7 @@ calcMeteoParam converts, and derives meterorlogical parameters from the ARPS net
      \item relative air humidity (%)
      \item u component of the horizontal windvector (m/s)
      \item v component of the horizontal windvector (m/s)
+     \item w component of the horizontal windvector (m/s)
      \item windspeed (m/s)
      \item wind direction (deg)
      }
@@ -107,7 +108,7 @@ The following equations are used:\cr
  pr<-airpressure(nc)
 }
 \author{
-Hanna Meyer, Chris Reudenbach
+Chris Reudenbach and Hanna Meyer,
 }
 \seealso{
 If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}

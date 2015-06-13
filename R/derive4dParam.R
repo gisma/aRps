@@ -1,6 +1,43 @@
-derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","ws","wd")){
+#'@title extract and calculates Meteo Parameter from an ARPS netcdf file
+#'@description  Extract arbitrary ARPS model run parameter for usage in R
+
+#'@source 
+#'\tabular{ll}{
+#'Package: \tab peRfectpeak\cr
+#'Type: \tab Package\cr
+#'Version: \tab 0.2\cr
+#'License: \tab GPL (>= 2)\cr
+#'LazyLoad: \tab yes\cr
+#'}
+
+#'@name derive4dParam
+#'@aliases derive4dParam
+
+#'@usage derive4dParam(file, param)
+#'@author Chris Reudenbach and Hanna Meyer
+#'@references \url{http://giswerk.org/doku.php?id=wac:modeling:arps:intro}
+#'@seealso For calculate thermodynamic variables see\code{\link{calcMeteoParam}}. 
+#' 
+#'@param file  is a filname of an ARPS netcdf file
+#'@param param  is a parameter  out of "tc","td","es","e","rh","pr","u","v","w","ws","wd"
+#'
+#'@return derive4dParam returns the following parameters:
+#'\tabular{ll}{
+#'$paramter  \tab"tc","td","es","e","rh","pr","u","v","w","ws","wd"\cr
+#'}  
+
+#'@export derive4dParam
+#'@examples   
+#'  #### Example to extract thermodynamic or wind data 
+#'  #### from a ARPS nccdf file
+#'       
+#' arps.ncfile=system.file("kili.nc", package="aRps")
+#' ws=derive4dParam(arps.ncfile,"ws")
+#' ws
+
+derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","w","ws","wd")){
   #
-  # Copyright 2013 Hanna Meyer, and Chris Reudenbach
+  # Copyright 2013 Hanna Meyer and Chris Reudenbach
   #
   # This file is part of the aRps library for R and related languages.
   #
@@ -36,6 +73,8 @@ derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","w
   writeLines('u vector done')
   v=wind[[4]]
   writeLines('v vector done')
+  w=wind[[5]]
+  writeLines('w vector done')
   ws=wind[[1]]
   writeLines('windspeed done')
   wd=wind[[2]]
@@ -74,8 +113,7 @@ derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","w
     pr=airpressure(nc)
     writeLines('air pressure done')
   }
-  
-  
+
   result=list()
   for (i in 1:length(param)){
     result[[i]]=get(param[i])
