@@ -1,7 +1,7 @@
 Package: aRps
 Type: Package
 Title: Analyzing and visualizing Arps model runs output
-Version: 0.1
+Version: 0.3.1
 Date: 2013-11-24, Update: 2015-06-13
 Author: Chris Reudenbach, Hanna Meyer
 Maintainer: Hanna Meyer <hanna.meyer1@gmail.com>
