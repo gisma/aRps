@@ -8,7 +8,7 @@
 \tabular{ll}{
 Package: \tab aRps\cr
 Type: \tab Package\cr
-Version: \tab 0.2\cr
+Version: \tab 0.3\cr
 License: \tab GPL (>= 2)\cr
 LazyLoad: \tab yes\cr
 }
@@ -48,7 +48,7 @@ data column is converted to a data.frame as used bei the plotradiosonde function
  plotARPScol(arps.ncfile,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE)
 }
 \author{
-Hanna Meyer, Chris Reudenbach
+Chris Reudenbach, Hanna Meyer
 }
 \seealso{
 seealso

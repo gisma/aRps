@@ -16,12 +16,12 @@
 #'@return plots a skew-T, log p diagram from the required domain position
 #'returns additionale the corresponding table of data
 
-#'@author Hanna Meyer, Chris Reudenbach
+#'@author Chris Reudenbach, Hanna Meyer
 #'@source 
 #'\tabular{ll}{
 #'Package: \tab aRps\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.2\cr
+#'Version: \tab 0.3\cr
 #'License: \tab GPL (>= 2)\cr
 #'LazyLoad: \tab yes\cr
 #'}
