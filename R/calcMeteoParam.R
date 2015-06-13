@@ -104,8 +104,8 @@
 #'  #    (3) use it (i.e. air pressure)
 
 
-#'  arpsexample=system.file("kili.nc", package="aRps")
-#'  nc <- nc_open(arpsexample)
+#'  arps.ncfile=system.file("kili.nc", package="aRps")
+#'  nc <- nc_open(arps.ncfile)
 #'  pr<-airpressure(nc) 
 
 alt=function(nc){  
@@ -142,17 +142,18 @@ wind=function(nc,var){
   
   # destagger the values
   # means calculate the average for the grid from the neighbouring grid-borders
-  u=    0.5*(u[1:(as.numeric(x.stag.dim)-1),,,]+u[2:(x.stag.dim),,,])
-  v=    0.5*(v[,1:(as.numeric(y.stag.dim)-1),,]+v[,2:(y.stag.dim),,])
-  w=    0.5*(w[,,1:(as.numeric(z.stag.dim)-1),]+w[,,2:(z.stag.dim),])
+  
+  vv=    0.5*(v[,1:(as.numeric(x.stag.dim)-1),,]+v[,2:(x.stag.dim),,])
+  uu=    0.5*(u[1:(as.numeric(y.stag.dim)-1),,,]+u[2:(y.stag.dim),,,])
+  ww=    0.5*(w[,,1:(as.numeric(z.stag.dim)-1),]+w[,,2:(z.stag.dim),])
 
   # calculations
   # windspeed (m/s)
-  ws<-sqrt(u^2+v^2)
+  ws<-sqrt(uu^2+vv^2)
   # winddirection in degree 
-  wd<-180+atan2(u,v)*57.295
+  wd<-180+atan2(uu,vv)*57.295
   
-  wind=list(u,v,w,ws,wd)
+  wind=list(uu,vv,ww,ws,wd)
   return (wind)    
 }
 

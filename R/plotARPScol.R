@@ -29,15 +29,18 @@
 #'@examples ###############
 #'  # get data
 #'  arps.ncfile=system.file("kili.nc", package="aRps")
-#   default usage: plots skew-T, log p diagram array (domain) position 10, 10 at timepos 2
-#'  plotARPScol(arps.ncfile,10,10,2)
-#'  #plots skew-T, log p diagram derived at array (domain) position 10, 10 at timepos 2 and shows data table
-#'  plotARPScol(arps.ncfile,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE) 
-#'@export  
+#'  nc <- nc_open(arps.ncfile)
+#'  
+#'  ### default usage: plots skew-T, log p diagram array (domain) position 10, 10 at timepos 2
+#'  plotARPScol(nc,10,10,2)
+#'  
+#'  ### plots skew-T, log p diagram derived at array (domain) position 10, 10 at timepos 2 and shows data table
+#'  plotARPScol(nc,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE) 
+#'  
+#'@export plotARPScol extcol
 #'@keywords keywords
 #'
-extcol=function(file,col,row,tim){
-  nc <- nc.open(file)
+extcol=function(nc,col,row,tim){
 
   lev=nc$dim$z$len
   pr1=slice(airpressure(nc), i=col:col ,j=row:row,k=1:lev,l=tim:tim)
@@ -49,6 +52,7 @@ extcol=function(file,col,row,tim){
   writeLines('dewpoint done')
   list(wind)
   wind=wind(nc)
+  zp=alt(nc)
   u1=slice(wind[[3]], i=col:col ,j=row:row,k=1:lev,l=tim:tim)
   writeLines('u vector done')
   v1=slice(wind[[4]], i=col: col ,j=row:row,k=1:lev,l=tim:tim)
@@ -59,12 +63,12 @@ extcol=function(file,col,row,tim){
   writeLines('windspeed done')
   wd1=slice(wind[[2]], i=col:col ,j=row:row,k=1:lev,l=tim:tim)
   writeLines('wind dir.  done')
-  zp=slice(wind[[6]], i=col:col ,j=row:row,k=1:lev)
+  zp=slice(zp, i=col:col ,j=row:row,k=1:lev)
   writeLines('zp  done')
   rm(wind)
   rh1=slice(relhum(nc), i=col:col ,j=row:row,k=1:lev,l=tim:tim)
   writeLines('rel. humid.  done')
-  column=list(pr1,tc1,td1,u1,v1,ws1,wd1,rh1,zp,w)
+  column=list(pr1,tc1,td1,u1,v1,ws1,wd1,rh1,zp,w1)
   #param=c("pr","tc","td","u","v","ws","wd","rh","zp")
   #names(column)=param
   

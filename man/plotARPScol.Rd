@@ -43,9 +43,13 @@ data column is converted to a data.frame as used bei the plotradiosonde function
 ###############
  # get data
  arps.ncfile=system.file("kili.nc", package="aRps")
- plotARPScol(arps.ncfile,10,10,2)
- #plots skew-T, log p diagram derived at array (domain) position 10, 10 at timepos 2 and shows data table
- plotARPScol(arps.ncfile,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE)
+ nc <- nc_open(arps.ncfile)
+
+ ### default usage: plots skew-T, log p diagram array (domain) position 10, 10 at timepos 2
+ plotARPScol(nc,10,10,2)
+
+ ### plots skew-T, log p diagram derived at array (domain) position 10, 10 at timepos 2 and shows data table
+ plotARPScol(nc,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE)
 }
 \author{
 Chris Reudenbach, Hanna Meyer

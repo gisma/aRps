@@ -103,8 +103,8 @@ The following equations are used:\cr
  ###  (1) provide a valid netcdf file
  ##   (2) open it
  #    (3) use it (i.e. air pressure)
- arpsexample=system.file("kili.nc", package="aRps")
- nc <- nc_open(arpsexample)
+ arps.ncfile=system.file("kili.nc", package="aRps")
+ nc <- nc_open(arps.ncfile)
  pr<-airpressure(nc)
 }
 \author{
