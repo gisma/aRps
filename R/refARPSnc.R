@@ -19,27 +19,26 @@
 #'@usage refARPSnc(file,param)
 #'@author Chris Reudenbach and Hanna Meyer
 #'@references \url{http://giswerk.org/doku.php?id=doku:modeling:arps:arps_installation}
-#'@seealso For retrieving and writing projected data see\code{\link{derive4dParam}}. 
+#'@seealso If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
 #' 
 #'@param file  is a filname of an ARPS netcdf file
-#'@param param  is name of the parameter to be extracted. if one use 'newAll' all params will be transcribed
 #'
-#'@return makenc3D returns the following parameters:
+#'@return refARPSnc returns the following parameter(s):
 #'\tabular{ll}{
-#'outfile \tab new netcdf file with all or a single param\cr
+#'outfile_fix \tab Georeferenced netCDF file with additionally wind and thermodynamic variables\cr
 #'}  
 #'@export refARPSnc
-#'@examples   
+#'@examples ###############
 #'  #### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
 #'       
-#' arpsexample=system.file("kili.nc", package="aRps")
-#' refARPSnc(arpsexample,'allNew')
+#' arps.ncfile=system.file("kili.nc", package="aRps")
+#' refARPSnc(arps.ncfile)
 
 
 
 refARPSnc<-function(file,varname){
   #
-  # Copyright 2013 Hanna Meyer, and Chris Reudenbach
+  # Copyright 2013-15 Chris Reudenbach, Hanna Meyer
   #
   # This file is part of the aRps library for R and related languages.
   #
@@ -58,8 +57,9 @@ refARPSnc<-function(file,varname){
   # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
   
   
-  writeLines("Using 'allNew' will require a bit of time,")
+  writeLines("the conversion will require a bit of time,")
   writeLines("so please be patient...;)")
+  writeLines(" ")
   writeLines("extracting and calculating georeference- and meta-data...")
   
   # assign orig filename

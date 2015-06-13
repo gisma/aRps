@@ -25,7 +25,6 @@
 #'License: \tab GPL (>= 2)\cr
 #'LazyLoad: \tab yes\cr
 #'}
-#'@seealso seealso
 #'@examples ###############
 #'  # get data
 #'  arps.ncfile=system.file("kili.nc", package="aRps")

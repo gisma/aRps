@@ -17,13 +17,11 @@ refARPSnc(file,param)
 }
 \arguments{
 \item{file}{is a filname of an ARPS netcdf file}
-
-\item{param}{is name of the parameter to be extracted. if one use 'newAll' all params will be transcribed}
 }
 \value{
-makenc3D returns the following parameters:
+refARPSnc returns the following parameter(s):
 \tabular{ll}{
-outfile \tab new netcdf file with all or a single param\cr
+outfile_fix \tab Georeferenced netCDF file with additionally wind and thermodynamic variables\cr
 }
 }
 \description{
@@ -31,10 +29,11 @@ The information of the projection is calculated using the informations as derive
 \code{\link{getRefInfo}} provides all missing projection values of an ARPS netCDF file
 }
 \examples{
-#### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
+###############
+ #### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
 
-arpsexample=system.file("kili.nc", package="aRps")
-refARPSnc(arpsexample,'allNew')
+arps.ncfile=system.file("kili.nc", package="aRps")
+refARPSnc(arps.ncfile)
 }
 \author{
 Chris Reudenbach and Hanna Meyer
@@ -43,6 +42,6 @@ Chris Reudenbach and Hanna Meyer
 \url{http://giswerk.org/doku.php?id=doku:modeling:arps:arps_installation}
 }
 \seealso{
-For retrieving and writing projected data see\code{\link{derive4dParam}}.
+If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
 }
 

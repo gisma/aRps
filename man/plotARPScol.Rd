@@ -54,8 +54,5 @@ data column is converted to a data.frame as used bei the plotradiosonde function
 \author{
 Chris Reudenbach, Hanna Meyer
 }
-\seealso{
-seealso
-}
 \keyword{keywords}
 
