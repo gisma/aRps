@@ -22,6 +22,7 @@
 #' 
 #'@param file  is a filname of an ARPS netcdf file
 #'
+#'
 #'@return getRefInfo returns the following parameters:
 #'\tabular{ll}{
 #'$proj \tab proj4 projection string\cr

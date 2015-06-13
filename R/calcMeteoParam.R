@@ -95,6 +95,7 @@
 
 #'@seealso If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
 
+
 #'@export alt airpressure wind exnerpress satwatervapor partwatervapor tcelsius relhum dewpoint
 
 #'@examples
