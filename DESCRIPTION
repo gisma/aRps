@@ -5,15 +5,14 @@ Version: 0.3.1
 Date: 2013-11-24, Update: 2015-06-13
 Author: Chris Reudenbach, Hanna Meyer
 Maintainer: Hanna Meyer <hanna.meyer1@gmail.com>
-Description: aRps is a collection of routines for georeference, read and
-    plot ARPS model run results.
+Description: aRps is a collection of routines for georeferencing, converting, 
+    extracting and plotting ARPS model run results.
     Currently the following plots are supported:
-    meteograms with n parametes, different SKEW-T,log p diagrams (C)
-    wind profiles for vertical and temporal meteorological data as derived by
-    rawinsondes or in this case numerical weather prediction models as ARPS
-    The raw ARPS raw data files are in netCDF format. Data is converted and some thermodynamic 
-    calculations are performed. Finally it the netCDF file is correctly georeferenced.  
-    Use "help(ExampleSonde)" for the full explanation of the sounding data files.
+    SKEW-T,log p diagrams - vertical temperature (and optional wind) profiles from ARPS results
+    simple meteograms with n parametes
+    The original "ARPS-specific" netCDF format is converted and correctly georeferencend to meet GIS/IDV format specification.
+    Some basic wind and thermodynamic calculations are performed to be able to plot the ske log T diagrams.
+    Remarks:
     The visualisation of sounding data is cloned by the package Radiosonde
     originally from Tim Hoar, Eric Gilleland, Doug Nychka and Liangying Zhang
     <thoar@ucar.edu>. The adaption provides degree Celsius, and the option to focus 
