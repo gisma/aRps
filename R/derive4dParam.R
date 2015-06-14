@@ -13,13 +13,13 @@
 #'@name derive4dParam
 #'@aliases derive4dParam
 
-#'@usage derive4dParam(file, param)
+#'@usage derive4dParam(filename,param=c("tc","td","es","e","rh","pr","u","v","w","ws","wd"))
 #'@author Chris Reudenbach and Hanna Meyer
 #'@references \url{http://giswerk.org/doku.php?id=wac:modeling:arps:intro}
 #'@seealso For calculate thermodynamic variables see\code{\link{calcMeteoParam}}. 
 #' 
-#'@param file  is a filname of an ARPS netcdf file
-#'@param param  is a parameter  out of "tc","td","es","e","rh","pr","u","v","w","ws","wd"
+#'@param filename  is a filname of an ARPS netcdf file
+#'@param param  is a parameter(list)  out of "tc","td","es","e","rh","pr","u","v","w","ws","wd"
 #'
 #'@return derive4dParam returns the following parameters:
 #'\tabular{ll}{
@@ -64,7 +64,7 @@ derive4dParam<-function(filename,param=c("tc","td","es","e","rh","pr","u","v","w
   
   #filename = '/home/creu/progs/opengrads/data/stol_d1_ARP.nc'
   #filename= '/home/creu/Daten/ARPS/marburg_d1.nc'
-  nc <- open.ncdf( filename )
+  nc <- nc_open( filename )
   # get pressure (Pa)
   #p = get.var.ncdf( nc, "P", start=c(1,1,2,1), count=c(5,5,1,1) )
   

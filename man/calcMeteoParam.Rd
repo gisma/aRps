@@ -5,12 +5,10 @@
 \alias{calcMeteoParam}
 \title{calcMeteoParam calculates the meteorological parameters based on the ARPS-netCDF output file}
 \usage{
-wnd<-wind(nc)
+x<-wind(nc)
 }
 \arguments{
 \item{nc}{netcdf object as opened by: nc <- open.ncdf(arpsexample)}
-
-\item{function}{name}
 }
 \value{
 The function wind returns a list of the the unstaggered wind components (u,v,ws,wd).

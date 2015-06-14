@@ -4,14 +4,14 @@
 #'@description
 #' plotARPSskewT extract a unique column of the arps ARPS cube. The derived single
 #' data column is converted to a data.frame as used bei the plotradiosonde function of the adapted Radiosonde package
-#'@usage  plotARPSskewT(filename,col, row, tim, zoom, winds=FALSE, viewtable=FALSE)
-#'@param filename of an valid ARPS netCDF file
+#'@usage  plotARPSskewT(file,col, row, tim, zoom = TRUE, winds=FALSE, writesounding=FALSE)
+#'@param file  ARPS netCDF file
 #'@param col   array position of the column to be extracted
 #'@param row   array position of the row to be extracted
 #'@param tim   time step of the dataset to be extracted
 #'@param zoom  if (zoom=TRUE) the skewt log digramm is plotted only for a pressure between 1050 and 400 hPa
 #'@param winds  if (wind=TRUE) a windbarb column is added beside the digramm
-#'@param viewtable  if (viewtable=TRUE) showing result table
+#'@param writesounding  if (writesounding=TRUE) showing result table
 
 #'@return plots a skew-T, log p diagram from the required domain position
 #'returns additionale the corresponding table of data
@@ -26,23 +26,24 @@
 #'LazyLoad: \tab yes\cr
 #'}
 #'
-#'@examples ###############
+#'@examples
 #'  # get data
 #'  arps.ncfile=system.file("kili.nc", package="aRps")
 #'  nc <- nc_open(arps.ncfile)
 #'  
-#'  ### default usage: plots skew-T, log p diagram array (domain) position 10, 10 at timepos 2
-#'  plotARPSskewT(nc,10,10,2)
+#'  # plots skew-T, log p diagram domain position 10, 10 at timepos 2 
+#'  plotARPSskewT(nc,10,10,2,zoom=TRUE, winds=FALSE,writesounding=FALSE)
 #'  
-#'  ### plots skew-T, log p diagram derived at array (domain) position 10, 10 at timepos 2 and shows data table
-#'  plotARPSskewT(nc,10,10,2, zoom=FALSE, winds=TRUE,viewtable=TRUE) 
-#'  
+#'  ### plots skew-T, log p diagram domain position 10, 10 at timepos 2 and shows data table
+#'  plotARPSskewT(nc,10,10,2, zoom=FALSE, winds=TRUE,writesounding=TRUE) 
+
+#'@import arrayhelpers reshape2
 #'@export plotARPSskewT 
 #'@keywords keywords
 #'
 
 
-plotARPSskewT <- function(file,col,row,tim,zoom=TRUE,winds=FALSE,viewtable=FALSE){
+plotARPSskewT <- function(file,col,row,tim,zoom=TRUE,winds=FALSE,writesounding=FALSE){
 
   # extract column data
   column=getARPSsounding(file,col,row,tim)
@@ -68,8 +69,8 @@ plotARPSskewT <- function(file,col,row,tim,zoom=TRUE,winds=FALSE,viewtable=FALSE
   sounding[, "wwind"] <- w
   sounding[, "wspd"]  <- ws
   sounding[, "dir"]   <- wd
-  if (viewtable){
-    View(sounding) 
+  if (writesounding){
+    sounding 
     write.table(sounding,file=paste0(col,row,tim,'.txt'))
     save(sounding,file=paste0(col,row,tim,'.RData'))
   }

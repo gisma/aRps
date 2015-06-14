@@ -5,36 +5,14 @@ Version: 0.3.1
 Date: 2013-11-24, Update: 2015-06-13
 Author: Chris Reudenbach, Hanna Meyer
 Maintainer: Hanna Meyer <hanna.meyer1@gmail.com>
-Description: aRps is a collection of routines for georeferencing, converting, 
-    extracting and plotting ARPS model run results.
-    Currently the following plots are supported:
-    SKEW-T,log p diagrams - vertical temperature (and optional wind) profiles from ARPS results
-    simple meteograms with n parametes
-    The original "ARPS-specific" netCDF format is converted and correctly georeferencend to meet GIS/IDV format specification.
-    Some basic wind and thermodynamic calculations are performed to be able to plot the ske log T diagrams.
-    Remarks:
-    The visualisation of sounding data is cloned by the package Radiosonde
-    originally from Tim Hoar, Eric Gilleland, Doug Nychka and Liangying Zhang
-    <thoar@ucar.edu>. The adaption provides degree Celsius, and the option to focus 
-    on the lower boundary pressure levels using also ARPS model run results.
-    The visualisation of the meteogram plots utilize Code from the package
-    meteogRam as provided by Bogdan Bochenek <bogdan.bochenek@uj.edu.pl>
+Description: aRps is a collection of routines for georeferencing, converting, extracting and plotting ARPS model run results. Currently the following plots are supported: SKEW-T,log p diagrams - vertical temperature (and optional wind) profiles from ARPS results simple meteograms with n parametes The original "ARPS-specific" netCDF format is converted and correctly georeferencend to meet GIS/IDV format specification. Some basic wind and thermodynamic calculations are performed to be able to plot the skew log T diagrams. The visualisation of sounding data is cloned by the package Radiosonde originally from Tim Hoar, Eric Gilleland, Doug Nychka and Liangying Zhang thoar@ucar.edu. The adaption provides degree Celsius, and the option to focus on the lower boundary pressure levels using also ARPS model results. The visualisation of the meteogram plots utilize Code from the package meteogRam as provided by Bogdan Bochenek bogdan.bochenek@uj.edu.pl 
+URL: https://github.com/gisma/aRps (gitHub repo)
+     http://giswerk.org/doku.php?id=wac:modeling:arps:intro (project page)
 License: GPL (>= 2)
-Depends:
+Depends: 
     R (>= 2.14),
-    gdata,
-    stats,
-    methods,
     ncdf4,
-    ggplot2,
     reshape2,
-    raster,
     gdalUtils,
-    proj4,
     rgdal,
-    RNCEP,
-    mapdata,
-    maps,
-    maptools,
-    stringr,
     arrayhelpers

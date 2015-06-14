@@ -82,9 +82,17 @@
 #'                 \tab \eqn{qv} \tab   {= water vapor mixing ratio (g/kg)}\cr
 #'                 \tab \eqn{u,v} \tab   {the horizontal windvector components (m/s) are directly derived from the model inputfile}\cr
 #'      }}
-#'@usage wnd<-wind(nc)
+#'@usage x<-wind(nc)
+#'@usage x<-alt(nc)
+#'@usage x<-airpressure(nc)
+#'@usage x<-exnerpress(nc)
+#'@usage x<-satwatervapor(nc) 
+#'@usage x<-partwatervapor(nc) 
+#'@usage x<-tcelsius(nc)
+#'@usage x<-relhum(nc)
+#'@usage x<-dewpoint(nc)
 
-#'@param function name
+
 #'@param nc netcdf object as opened by: nc <- open.ncdf(arpsexample)
 #'@return  
 #'The function wind returns a list of the the unstaggered wind components (u,v,ws,wd).
@@ -95,7 +103,7 @@
 
 #'@seealso If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
 
-
+#'@import ncdf4 
 #'@export alt airpressure wind exnerpress satwatervapor partwatervapor tcelsius relhum dewpoint
 
 #'@examples

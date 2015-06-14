@@ -34,7 +34,7 @@
 #'$coordx \tab list of x coordinates according to the domain $xcoord\cr
 #'$coordy \tab list of y coordinates according to the domain $ycoord\cr
 #'}  
-
+#'@import gdalUtils rgdal
 #'@export getRefInfo
 #'@examples   
 #'  #### Example to extract the projection and 

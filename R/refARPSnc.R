@@ -17,7 +17,7 @@
 
 
 
-#'@usage refARPSnc(file,param)
+#'@usage refARPSnc(file)
 #'@author Chris Reudenbach and Hanna Meyer
 #'@references \url{http://giswerk.org/doku.php?id=doku:modeling:arps:arps_installation}
 #'@seealso If you want to use this data in a GIS or otherwise georeferenced you need to extract the projection and domain extent according to the reference system that was used by ARPS \code{\link{getRefInfo}}
@@ -28,16 +28,18 @@
 #'\tabular{ll}{
 #'outfile_fix \tab Georeferenced netCDF file with additionally wind and thermodynamic variables\cr
 #'}  
+#'@import  ncdf4 
 #'@export refARPSnc
 #'@examples ###############
 #'  #### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
 #'       
 #' arps.ncfile=system.file("kili.nc", package="aRps")
+#'  nc <- nc_open(arps.ncfile)
 #' refARPSnc(arps.ncfile)
 
 
 
-refARPSnc<-function(file,varname){
+refARPSnc<-function(file){
   #
   # Copyright 2013-15 Chris Reudenbach, Hanna Meyer
   #

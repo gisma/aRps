@@ -16,19 +16,13 @@ LazyLoad: \tab yes\cr
 getARPSsounding(nc,col,row,tim)
 }
 \arguments{
+\item{nc}{ARPS netCDF file}
+
 \item{col}{array position of the column to be extracted}
 
 \item{row}{array position of the row to be extracted}
 
 \item{tim}{time step of the dataset to be extracted}
-
-\item{filename}{of an valid ARPS netCDF file}
-
-\item{zoom}{if (zoom=TRUE) the skewt log digramm is plotted only for a pressure between 1050 and 400 hPa}
-
-\item{winds}{if (wind=TRUE) a windbarb column is added beside the digramm}
-
-\item{viewtable}{if (viewtable=TRUE) showing result table}
 }
 \value{
 a dataframe containing the above variables
@@ -40,10 +34,9 @@ and can be plotted as a skew-T, log p diagram using plotradiosonde
 }
 \examples{
 ###############
- # get data
+ # get data open it and extract sounding data
  arps.ncfile=system.file("kili.nc", package="aRps")
  nc <- nc_open(arps.ncfile)
-
  getARPSsounding(nc,10,10,2)
 }
 \author{

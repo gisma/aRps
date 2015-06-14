@@ -13,12 +13,12 @@ LazyLoad: \tab yes\cr
 }
 }
 \usage{
-derive4dParam(file, param)
+derive4dParam(filename,param=c("tc","td","es","e","rh","pr","u","v","w","ws","wd"))
 }
 \arguments{
-\item{param}{is a parameter  out of "tc","td","es","e","rh","pr","u","v","w","ws","wd"}
+\item{filename}{is a filname of an ARPS netcdf file}
 
-\item{file}{is a filname of an ARPS netcdf file}
+\item{param}{is a parameter(list)  out of "tc","td","es","e","rh","pr","u","v","w","ws","wd"}
 }
 \value{
 derive4dParam returns the following parameters:

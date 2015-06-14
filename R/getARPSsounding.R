@@ -6,13 +6,10 @@
 #' The derived data column is converted to a data.frame 
 #' and can be plotted as a skew-T, log p diagram using plotradiosonde
 #'@usage  getARPSsounding(nc,col,row,tim)
-#'@param filename of an valid ARPS netCDF file
+#'@param nc ARPS netCDF file
 #'@param col   array position of the column to be extracted
 #'@param row   array position of the row to be extracted
 #'@param tim   time step of the dataset to be extracted
-#'@param zoom  if (zoom=TRUE) the skewt log digramm is plotted only for a pressure between 1050 and 400 hPa
-#'@param winds  if (wind=TRUE) a windbarb column is added beside the digramm
-#'@param viewtable  if (viewtable=TRUE) showing result table
 
 #'@return a dataframe containing the above variables
 
@@ -27,12 +24,12 @@
 #'}
 #'
 #'@examples ###############
-#'  # get data
+#'  # get data open it and extract sounding data
 #'  arps.ncfile=system.file("kili.nc", package="aRps")
 #'  nc <- nc_open(arps.ncfile)
-#'  
 #'  getARPSsounding(nc,10,10,2)
 #'  
+#'@import arrayhelpers reshape2
 #'@export getARPSsounding
 #'@keywords keywords
 #'

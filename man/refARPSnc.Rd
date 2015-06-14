@@ -13,7 +13,7 @@ LazyLoad: \tab yes\cr
 }
 }
 \usage{
-refARPSnc(file,param)
+refARPSnc(file)
 }
 \arguments{
 \item{file}{is a filname of an ARPS netcdf file}
@@ -33,6 +33,7 @@ The information of the projection is calculated using the informations as derive
  #### Example to georeference an ARPS netCDF 3.0 file and to calculate some important meteo params
 
 arps.ncfile=system.file("kili.nc", package="aRps")
+ nc <- nc_open(arps.ncfile)
 refARPSnc(arps.ncfile)
 }
 \author{
