@@ -16,13 +16,10 @@ LazyLoad: \tab yes\cr
 refARPSnc(file)
 }
 \arguments{
-\item{file}{is a filname of an ARPS netcdf file}
+\item{file}{ARPS netCDF file}
 }
 \value{
-refARPSnc returns the following parameter(s):
-\tabular{ll}{
-outfile_fix \tab Georeferenced netCDF file with additionally wind and thermodynamic variables\cr
-}
+refARPSnc returns the correctly georeferenced and formated ARPS netCDF file and adds windspeed and -direction and some basic thermodynamic variables
 }
 \description{
 The information of the projection is calculated using the informations as derived by the gdalinfo call of the ARPS netcdf file. Currently only "lambert_conformal_conic" and 'latlong' is supported.
